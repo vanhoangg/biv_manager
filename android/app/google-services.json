@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "461841345342",
+    "project_id": "biv-manager",
+    "storage_bucket": "biv-manager.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461841345342:android:0aa8a970d861204623da6f",
+        "android_client_info": {
+          "package_name": "com.example.biv_manager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAok26cXaV8GKxRt7ScFgLJ2i0i0dLHLYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

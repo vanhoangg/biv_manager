@@ -1,0 +1,15 @@
+{
+  "appName": "Biv Manager",
+  "settings": "Cài đặt",
+  "language": "Ngôn ngữ",
+  "textDirection": "Hướng văn bản",
+  "leftToRight": "Trái sang phải",
+  "rightToLeft": "Phải sang trái",
+  "loading": "Đang tải...",
+  "error": "Lỗi",
+  "success": "Thành công",
+  "cancel": "Hủy",
+  "save": "Lưu",
+  "delete": "Xóa",
+  "edit": "Sửa"
+}

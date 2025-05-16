@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Load environment variables from .env file
+if [ -f .env ]; then
+    export $(cat .env | grep -v '^#' | xargs)
+fi
+
+# Build the dart-define arguments
+DART_DEFINE_ARGS=""
+
+# Firebase config
+DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_API_KEY=$FIREBASE_API_KEY"
+DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_APP_ID=$FIREBASE_APP_ID"
+DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID"
+DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_MESSAGING_SENDER_ID=$FIREBASE_MESSAGING_SENDER_ID"
+DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN"
+DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_STORAGE_BUCKET=$FIREBASE_STORAGE_BUCKET"
+
+# API config
+DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=API_KEY=$API_KEY"
+DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=BASE_URL=$BASE_URL"
+
+# Backdoor access
+DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=BACKDOOR_EMAIL=$BACKDOOR_EMAIL"
+DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=BACKDOOR_PASSWORD=$BACKDOOR_PASSWORD"
+
+# Run the app in debug mode on Chrome
+flutter run -d chrome --web-renderer html $DART_DEFINE_ARGS 

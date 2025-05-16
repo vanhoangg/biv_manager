@@ -1,0 +1,62 @@
+{
+  "appName": "Biv Manager",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading text"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Error text"
+  },
+  "success": "Success",
+  "@success": {
+    "description": "Success text"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel text"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save text"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete text"
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Edit text"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Back text"
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Next text"
+  },
+  "done": "Done",
+  "@done": {
+    "description": "Done text"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Search text"
+  },
+  "noData": "No data available",
+  "@noData": {
+    "description": "No data text"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry text"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Confirm text"
+  }
+}

@@ -1,0 +1,350 @@
+
+
+
+Build a responsive Flutter mobile application to manage personal or small business debts. The system should include:
+
+Authentication using Firebase Auth (email, phone, or Google login).
+
+A Dashboard screen that displays total debt, total paid, and remaining debt, along with a chart showing debt changes over time.
+
+A Customer List screen with search and filter capabilities.
+
+A Customer Detail screen that shows all transaction history with the ability to add new debts or payments.
+
+Transaction forms to log new debts or payments with date, note, and image attachment.
+
+A Report screen to export filtered data to PDF or Excel.
+
+Support for REST API integration (backend built in Rust) using Dio + Retrofit.
+
+Smooth, modern UI/UX with responsive design adapting to different screen sizes.
+
+🌟 Additional Smart Features
+Advanced Search & Filters: Filter by date range, amount, and payment status (paid/unpaid). Includes real-time name suggestions (autocomplete) when typing customer names.
+
+Attach Image/Bill to Transactions: Allow users to take or upload images (e.g., receipts) when logging a debt or payment.
+
+Voice Notes to Text: Users can record voice memos as notes for each transaction; automatically transcribed and stored as text.
+
+Analytical Reports:
+
+Chart of top 5 customers with highest debt.
+
+Monthly recovery rate analysis.
+
+Debt summary grouped by location or customer category.
+
+🔧 Tech Stack & Libraries
+State Management: flutter_bloc – scalable BLoC pattern for handling UI states.
+
+Auth: firebase_auth – user login with secure Firebase authentication.
+
+API Requests: dio, retrofit – for communicating with backend services written in Rust.
+
+Responsive UI: responsive_framework, flutter_svg – to create responsive and scalable interfaces with vector graphics support.
+
+Date & Time: intl, flutter_datetime_picker – for date formatting and user-friendly date selection.
+
+Charts & Visuals: syncfusion_flutter_charts – for interactive bar, line, or pie charts to visualize debt trends.
+
+Exporting: pdf, excel – to generate downloadable financial reports.
+
+UI Enhancements: fluttertoast, awesome_dialog, loading_overlay – for user feedback, dialogs, and loading states.
+
+Autocomplete & Search: flutter_typeahead – for smart customer name suggestions.
+
+Image Upload: image_picker – for capturing or uploading receipt images.
+
+Voice Notes: speech_to_text – for recording and transcribing voice notes.
+DI: Get_It
+
+---
+
+### **Use Case 1: User Authentication**
+
+**As a user**
+**Given** I am on the authentication screen
+**When** I choose to log in via email, phone, or Google
+**Then** I should be authenticated using Firebase Auth
+**And** be redirected to the Dashboard screen
+
+---
+
+### **Use Case 2: View Dashboard**
+
+**As a user**
+**Given** I have logged into the app
+**When** I land on the Dashboard screen
+**Then** I should see:
+
+* The total debt amount
+* The total amount paid
+* The remaining debt
+* A chart visualizing debt changes over time
+
+---
+
+### **Use Case 3: Browse Customers**
+
+**As a user**
+**Given** I am on the Customer List screen
+**When** I scroll through or type into the search bar
+**Then** I should see a list of customers that match the query
+**And** I can apply filters by name, amount, status, or date
+
+---
+
+### **Use Case 4: View Customer Details**
+
+**As a user**
+**Given** I tap on a customer from the list
+**Then** I should be taken to the Customer Detail screen
+**And** I should see:
+
+* All debt and payment transactions associated with that customer
+* The ability to add a new debt or payment transaction
+
+---
+
+### **Use Case 5: Add Transaction**
+
+**As a user**
+**Given** I am on the Add Transaction screen
+**When** I fill in the date, amount, note, and optionally attach an image
+**And** optionally record a voice note
+**Then** the transaction should be saved and added to the customer's history
+
+---
+
+### **Use Case 6: Attach Image/Bill**
+
+**As a user**
+**Given** I am adding or editing a transaction
+**When** I choose to upload or take a photo
+**Then** the image should be attached to the transaction record
+
+---
+
+### **Use Case 7: Record and Transcribe Voice Note**
+
+**As a user**
+**Given** I am adding a transaction
+**When** I record a voice memo
+**Then** it should be automatically transcribed to text
+**And** stored in the transaction notes
+
+---
+
+### **Use Case 8: Generate and Export Reports**
+
+**As a user**
+**Given** I am on the Reports screen
+**When** I apply filters like date range, customer, location, or status
+**Then** I should be able to export the filtered data to PDF or Excel
+
+---
+
+### **Use Case 9: View Analytical Reports**
+
+**As a user**
+**Given** I am on the Reports screen
+**Then** I should see:
+
+* A chart showing the top 5 customers with the highest debts
+* Monthly debt recovery rates
+* Summary of debts grouped by location or customer type
+
+---
+
+### **Use Case 10: API Integration**
+
+**As a developer**
+**Given** I am implementing data flow in the app
+**Then** the app should fetch and send data using Dio and Retrofit
+**And** connect seamlessly to a backend written in Rust
+
+---
+
+### **Use Case 11: Responsive UI**
+
+**As a user**
+**Given** I use the app on different devices (phone/tablet)
+**Then** the UI should adapt responsively and remain visually clear and functional
+
+---
+
+Would you like these use cases formatted into a table or exported to a document?
+
+
+Absolutely! Based on your requirements and stack, here's a well-crafted **prompt/description of your app architecture**, suitable for documentation, onboarding, or technical interviews:
+
+---
+
+## 📐 **App Architecture Prompt: Debt Management Flutter App**
+
+Our **Flutter-based Debt Management App** is architected using a modular, scalable, and maintainable structure to manage personal or small business debt records. The architecture emphasizes clean separation of concerns, testability, and responsiveness across devices.
+
+---
+
+### 🔧 **1. Tech Stack Overview**
+
+* **Frontend Framework:** Flutter (with `flutter_bloc` for state management)
+* **Backend:** Rust-based REST API (connected via Dio + Retrofit)
+* **Authentication:** Firebase Auth (Email, Phone, Google)
+* **Database:** Cloud Firestore (optional offline caching if needed)
+* **Exporting Tools:** `pdf`, `excel`
+* **Media Handling:** `image_picker`, `speech_to_text`
+
+---
+
+### 🧱 **2. Architectural Layers**
+
+#### 📂 **Presentation Layer**
+
+* **UI Components:** Built using Flutter widgets with a focus on responsive design (`responsive_framework`, `flutter_svg`)
+* **State Management:** `flutter_bloc` to ensure clear separation between UI and business logic
+* **Routing & Navigation:** Declarative navigation (e.g., `go_router` or `auto_route` can be considered)
+
+#### 🧠 **Domain Layer**
+
+* **Use Cases:** Define app-specific business logic like:
+
+  * `AddTransactionUseCase`
+  * `FetchCustomerDetailUseCase`
+  * `GenerateReportUseCase`
+* **Entities:** Core business models like `Customer`, `Transaction`, `DebtSummary`
+
+#### 📊 **Data Layer**
+
+* **Repository Pattern:** Abstract interface with concrete implementations using:
+
+  * Firebase for auth
+  * REST API (Dio + Retrofit) for CRUD operations
+  * Local caching strategies if necessary
+* **Data Sources:**
+
+  * RemoteDataSource (REST API)
+  * LocalDataSource (e.g., SharedPreferences or secure storage)
+
+---
+
+### 🔐 **3. Authentication Flow**
+
+* Managed via `firebase_auth`
+* Supports multi-provider login (Email, Phone, Google)
+* Handles login, logout, and user session management
+* Redirects to Dashboard on successful login
+
+---
+
+### 📉 **4. Data Flow**
+
+* UI (Widget) → Bloc Event → Use Case → Repository → API/Cache → State → UI
+
+---
+
+### 📊 **5. Features Implemented per Architecture**
+
+| Feature                  | Bloc | Use Case | Repository | API | Widget |
+| ------------------------ | ---- | -------- | ---------- | --- | ------ |
+| Dashboard Stats          | ✅    | ✅        | ✅          | ✅   | ✅      |
+| Customer List + Search   | ✅    | ✅        | ✅          | ✅   | ✅      |
+| Customer Detail          | ✅    | ✅        | ✅          | ✅   | ✅      |
+| Add Debt/Payment         | ✅    | ✅        | ✅          | ✅   | ✅      |
+| Image Upload             | ✅    | ✅        | ✅          | ✅   | ✅      |
+| Voice Note Transcription | ✅    | ✅        | ✅          | -   | ✅      |
+| Analytical Reports       | ✅    | ✅        | ✅          | ✅   | ✅      |
+| Export to PDF/Excel      | ✅    | ✅        | ✅          | -   | ✅      |
+
+---
+
+### 💡 **Smart Features**
+
+* **Advanced Search & Filters:** Implemented with `flutter_typeahead` and custom filter logic
+* **Responsive UI:** Enabled via `responsive_framework`
+* **Charts & Visuals:** Integrated using `syncfusion_flutter_charts`
+* **Voice to Text:** Recorded using `speech_to_text` and transcribed to note fields
+* **Image/Bill Attachment:** Captured via `image_picker`
+
+---
+
+🧪 Testing Strategy
+Unit Tests: Focused on BLoC, Use Cases, and Repository Logic
+
+Widget Tests: For UI interactions and visual correctness
+
+Mocking: API and Firebase calls can be mocked for reliable testing
+
+---
+
+## 🌳 **Project Source Tree Structure**
+
+```
+lib/
+│
+├── main.dart                   # Entry point of the app
+├── app/
+│   ├── app.dart                # Root widget, router setup
+│   ├── router.dart             # Route definitions and navigation
+│   └── theme/                  # App themes, color schemes, text styles
+│
+├── core/
+│   ├── constants/              # App-wide constants (e.g., URLs, keys)
+│   ├── utils/                  # Utility helpers (formatting, validators, etc.)
+│   ├── error/                  # Custom exceptions and error handling
+│   └── di/                     # Dependency injection setup (GetIt or GetX bindings)
+│
+├── data/
+│   ├── datasources/
+│   │   ├── remote/             # Dio/Retrofit API service classes
+│   │   └── local/              # Local storage (SharedPrefs, secure storage)
+│   ├── models/                 # Data transfer models (DTOs)
+│   └── repositories/          # Repository implementations (calling APIs or local storage)
+│
+├── domain/
+│   ├── entities/               # Business logic models (Customer, Transaction, DebtSummary)
+│   ├── repositories/           # Abstract repository interfaces
+│   └── usecases/              # Business use cases (AddTransaction, FetchReports, etc.)
+│
+├── presentation/
+│   ├── blocs/                  # Bloc, Cubit, and state classes grouped by feature
+│   ├── screens/
+│   │   ├── dashboard/          # Dashboard UI + Bloc
+│   │   ├── customer_list/      # Customer list UI + Bloc
+│   │   ├── customer_detail/    # Customer detail UI + Bloc
+│   │   ├── transaction_form/   # Debt/payment form + Bloc
+│   │   ├── report/             # Export/report screen + analytics
+│   │   └── auth/               # Login/signup UI
+│   └── widgets/                # Reusable widgets (buttons, charts, dialogs)
+│
+├── shared/
+│   ├── extensions/             # Dart extension methods
+│   ├── mixins/                 # Common mixins for widgets or BLoCs
+│   └── components/             # Global components like loading overlay, custom inputs
+│
+test/
+│
+├── unit/
+│   ├── blocs/                  # Bloc logic tests
+│   ├── usecases/              # Use case logic tests
+│   └── repositories/          # Repository test (with mocks)
+│
+├── widget/                     # Widget UI interaction tests
+└── integration/                # Full-screen app tests
+```
+
+---
+
+## 📌 Key Structure Principles
+
+| Layer           | Description                                        |
+| --------------- | -------------------------------------------------- |
+| `app/`          | Entry-level config like routing and themes         |
+| `core/`         | Global tools/utilities shared across the app       |
+| `data/`         | Concrete implementations for API/local calls       |
+| `domain/`       | Abstract layer for business logic & interfaces     |
+| `presentation/` | All UI + BLoC logic, organized by screen           |
+| `shared/`       | Extensions, mixins, and universal components       |
+| `test/`         | Split by unit, widget, and integration level tests |
+
+---

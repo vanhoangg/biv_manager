@@ -1,0 +1,62 @@
+{
+  "appName": "Biv Manager",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  "loading": "Đang tải...",
+  "@loading": {
+    "description": "Loading text"
+  },
+  "error": "Lỗi",
+  "@error": {
+    "description": "Error text"
+  },
+  "success": "Thành công",
+  "@success": {
+    "description": "Success text"
+  },
+  "cancel": "Hủy",
+  "@cancel": {
+    "description": "Cancel text"
+  },
+  "save": "Lưu",
+  "@save": {
+    "description": "Save text"
+  },
+  "delete": "Xóa",
+  "@delete": {
+    "description": "Delete text"
+  },
+  "edit": "Sửa",
+  "@edit": {
+    "description": "Edit text"
+  },
+  "back": "Quay lại",
+  "@back": {
+    "description": "Back text"
+  },
+  "next": "Tiếp theo",
+  "@next": {
+    "description": "Next text"
+  },
+  "done": "Xong",
+  "@done": {
+    "description": "Done text"
+  },
+  "search": "Tìm kiếm",
+  "@search": {
+    "description": "Search text"
+  },
+  "noData": "Không có dữ liệu",
+  "@noData": {
+    "description": "No data text"
+  },
+  "retry": "Thử lại",
+  "@retry": {
+    "description": "Retry text"
+  },
+  "confirm": "Xác nhận",
+  "@confirm": {
+    "description": "Confirm text"
+  }
+}

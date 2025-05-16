@@ -1,0 +1,5 @@
+# analysis_options.yaml
+# See https://dart.dev/guides/language/analysis-options
+# This file enables recommended Flutter lints for the project.
+
+include: package:flutter_lints/flutter.yaml
