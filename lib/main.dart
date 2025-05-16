@@ -15,6 +15,9 @@ import 'package:biv_manager/firebase_options.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:biv_manager/presentation/blocs/auth/auth_bloc.dart';
 import 'package:biv_manager/presentation/blocs/theme/theme_bloc.dart';
+import 'package:biv_manager/presentation/blocs/locale/locale_bloc.dart';
+import 'package:biv_manager/presentation/blocs/locale/locale_state.dart';
+import 'package:biv_manager/presentation/blocs/locale/locale_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +38,16 @@ void main() async {
     );
   };
 
-  runApp(const MainApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => LocaleBloc()),
+        BlocProvider(create: (_) => di.sl<AuthBloc>()),
+        BlocProvider(create: (_) => di.sl<ThemeBloc>()),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {

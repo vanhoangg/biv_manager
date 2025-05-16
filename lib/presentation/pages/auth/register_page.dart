@@ -6,6 +6,9 @@ import 'package:biv_manager/core/constants/string_constants.dart';
 import 'package:biv_manager/presentation/blocs/auth/auth_bloc.dart';
 import 'package:biv_manager/presentation/blocs/auth/auth_event.dart';
 import 'package:biv_manager/presentation/blocs/auth/auth_state.dart';
+import 'package:biv_manager/presentation/widgets/custom_app_bar.dart';
+import 'package:biv_manager/presentation/widgets/custom_text_field.dart';
+import 'package:biv_manager/presentation/widgets/custom_button.dart';
 
 /// Register page
 class RegisterPage extends StatefulWidget {
@@ -33,9 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(StringConstants.register),
-      ),
+      appBar: const CustomAppBar(title: StringConstants.register),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
@@ -54,10 +55,10 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextFormField(
+                  CustomTextField(
+                    label: StringConstants.email,
                     controller: _emailController,
-                    decoration:
-                        const InputDecoration(labelText: StringConstants.email),
+                    keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return StringConstants.errorInvalidEmail;
@@ -66,10 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  TextFormField(
+                  CustomTextField(
+                    label: StringConstants.password,
                     controller: _passwordController,
-                    decoration: const InputDecoration(
-                        labelText: StringConstants.password),
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -79,23 +79,23 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  TextFormField(
+                  CustomTextField(
+                    label: StringConstants.confirmPassword,
                     controller: _confirmPasswordController,
-                    decoration: const InputDecoration(
-                        labelText: StringConstants.confirmPassword),
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return StringConstants.errorInvalidPassword;
                       }
                       if (value != _passwordController.text) {
-                        return StringConstants.passwordsDoNotMatch;
+                        return 'Passwords do not match';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 24),
-                  ElevatedButton(
+                  CustomButton(
+                    text: StringConstants.register,
                     onPressed: state is AuthLoading
                         ? null
                         : () {
@@ -108,9 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   );
                             }
                           },
-                    child: state is AuthLoading
-                        ? const CircularProgressIndicator()
-                        : const Text(StringConstants.register),
+                    isLoading: state is AuthLoading,
                   ),
                   TextButton(
                     onPressed: () {

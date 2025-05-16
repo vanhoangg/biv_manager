@@ -6,6 +6,9 @@ import 'package:biv_manager/core/constants/string_constants.dart';
 import 'package:biv_manager/presentation/blocs/auth/auth_bloc.dart';
 import 'package:biv_manager/presentation/blocs/auth/auth_event.dart';
 import 'package:biv_manager/presentation/blocs/auth/auth_state.dart';
+import 'package:biv_manager/presentation/widgets/custom_app_bar.dart';
+import 'package:biv_manager/presentation/widgets/custom_text_field.dart';
+import 'package:biv_manager/presentation/widgets/custom_button.dart';
 
 /// Forgot password page
 class ForgotPasswordPage extends StatefulWidget {
@@ -29,16 +32,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(StringConstants.forgotPassword),
-      ),
+      appBar: const CustomAppBar(title: StringConstants.forgotPassword),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text(StringConstants.passwordResetSuccess),
-              ),
+              const SnackBar(content: Text('Password reset link sent.')),
             );
             context.go(AppConstants.routeLogin);
           } else if (state is AuthError) {
@@ -55,15 +54,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    StringConstants.forgotPassword,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 24),
-                  TextFormField(
+                  CustomTextField(
+                    label: StringConstants.email,
                     controller: _emailController,
-                    decoration:
-                        const InputDecoration(labelText: StringConstants.email),
+                    keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return StringConstants.errorInvalidEmail;
@@ -72,7 +66,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     },
                   ),
                   const SizedBox(height: 24),
-                  ElevatedButton(
+                  CustomButton(
+                    text: 'Send Reset Link',
                     onPressed: state is AuthLoading
                         ? null
                         : () {
@@ -84,9 +79,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   );
                             }
                           },
-                    child: state is AuthLoading
-                        ? const CircularProgressIndicator()
-                        : const Text(StringConstants.resetPassword),
+                    isLoading: state is AuthLoading,
                   ),
                   TextButton(
                     onPressed: () {

@@ -1,28 +1,49 @@
 #!/bin/bash
 
-# Load environment variables from .env file
-if [ -f .env ]; then
-    export $(cat .env | grep -v '^#' | xargs)
+# Exit on error
+set -e
+
+# Function to check if an environment variable is set
+check_env_var() {
+    if [ -z "${!1}" ]; then
+        echo "Error: $1 is not set"
+        exit 1
+    fi
+}
+
+# Set default environment flavor if not set
+FLAVOR=${FLAVOR:-dev}
+
+# Load environment variables from flavor-specific .env file
+ENV_FILE=".env.$FLAVOR"
+if [ -f "$ENV_FILE" ]; then
+    echo "Loading environment variables from $ENV_FILE..."
+    export $(cat "$ENV_FILE" | grep -v '^#' | xargs)
+else
+    echo "Error: $ENV_FILE not found"
+    echo "Please create $ENV_FILE with the following variables:"
+    echo "API_KEY=your_api_key"
+    echo "BASE_URL=your_base_url"
+    echo "BACKDOOR_EMAIL=your_backdoor_email (optional)"
+    echo "BACKDOOR_PASSWORD=your_backdoor_password (optional)"
+    exit 1
 fi
 
-# Build the dart-define arguments
-DART_DEFINE_ARGS=""
+# Check required environment variables
+echo "Checking required environment variables..."
+check_env_var "API_KEY"
+check_env_var "BASE_URL"
 
-# Firebase config
-DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_API_KEY=$FIREBASE_API_KEY"
-DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_APP_ID=$FIREBASE_APP_ID"
-DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID"
-DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_MESSAGING_SENDER_ID=$FIREBASE_MESSAGING_SENDER_ID"
-DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN"
-DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=FIREBASE_STORAGE_BUCKET=$FIREBASE_STORAGE_BUCKET"
-
-# API config
-DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=API_KEY=$API_KEY"
+# Construct DART_DEFINE_ARGS for API configuration
+DART_DEFINE_ARGS="--dart-define=API_KEY=$API_KEY"
 DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=BASE_URL=$BASE_URL"
 
-# Backdoor access
-DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=BACKDOOR_EMAIL=$BACKDOOR_EMAIL"
-DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=BACKDOOR_PASSWORD=$BACKDOOR_PASSWORD"
+# Add backdoor access if provided
+if [ ! -z "$BACKDOOR_EMAIL" ] && [ ! -z "$BACKDOOR_PASSWORD" ]; then
+    DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=BACKDOOR_EMAIL=$BACKDOOR_EMAIL"
+    DART_DEFINE_ARGS="$DART_DEFINE_ARGS --dart-define=BACKDOOR_PASSWORD=$BACKDOOR_PASSWORD"
+fi
 
-# Run the app in debug mode on Chrome
-flutter run -d chrome --web-renderer html $DART_DEFINE_ARGS 
+# Run the app
+echo "Running app in $FLAVOR environment..."
+flutter run -d chrome $DART_DEFINE_ARGS 

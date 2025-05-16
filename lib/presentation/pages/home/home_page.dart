@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:biv_manager/core/constants/app_constants.dart';
 import 'package:biv_manager/core/theme/theme_inherited_widget.dart';
+import 'package:biv_manager/presentation/widgets/custom_app_bar.dart';
 
 /// Home page that contains the main navigation structure
 class HomePage extends StatefulWidget {
@@ -21,21 +22,7 @@ class _HomePageState extends State<HomePage> {
     final isDesktop = ResponsiveBreakpoints.of(context).largerThan(MOBILE);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppConstants.appName),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.brightness_6),
-            onPressed: () {
-              ThemeInheritedWidget.of(context).themeManager.toggleTheme();
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () => context.push(AppConstants.routeProfile),
-          ),
-        ],
-      ),
+      appBar: const CustomAppBar(title: 'Home'),
       drawer: isDesktop ? null : _buildDrawer(),
       body: Row(
         children: [

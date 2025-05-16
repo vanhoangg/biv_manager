@@ -1,20 +1,20 @@
 import 'package:biv_manager/core/config/firebase_config.dart';
+import 'package:biv_manager/firebase_options.dart';
 
 /// EnvVariables provides access to environment variables for the app.
 class EnvVariables {
   static String get currentFirebaseApiKey =>
-      const String.fromEnvironment('FIREBASE_API_KEY', defaultValue: '');
+      DefaultFirebaseOptions.currentPlatform.apiKey;
   static String get currentFirebaseAppId =>
-      const String.fromEnvironment('FIREBASE_APP_ID', defaultValue: '');
+      DefaultFirebaseOptions.currentPlatform.appId;
   static String get currentFirebaseProjectId =>
-      const String.fromEnvironment('FIREBASE_PROJECT_ID', defaultValue: '');
+      DefaultFirebaseOptions.currentPlatform.projectId;
   static String get currentFirebaseMessagingSenderId =>
-      const String.fromEnvironment('FIREBASE_MESSAGING_SENDER_ID',
-          defaultValue: '');
+      DefaultFirebaseOptions.currentPlatform.messagingSenderId;
   static String get currentFirebaseAuthDomain =>
-      const String.fromEnvironment('FIREBASE_AUTH_DOMAIN', defaultValue: '');
+      DefaultFirebaseOptions.currentPlatform.authDomain ?? '';
   static String get currentFirebaseStorageBucket =>
-      const String.fromEnvironment('FIREBASE_STORAGE_BUCKET', defaultValue: '');
+      DefaultFirebaseOptions.currentPlatform.storageBucket ?? '';
   static String get currentApiKey =>
       const String.fromEnvironment('API_KEY', defaultValue: '');
   static String get currentBaseUrl =>

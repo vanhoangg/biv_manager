@@ -58,5 +58,37 @@
   "about": "About",
   "@about": {
     "description": "About page title"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button text"
+  },
+  "transactionDetails": "Transaction Details",
+  "@transactionDetails": {
+    "description": "Transaction details page title"
+  },
+  "loadingTransactionDetails": "Loading transaction details...",
+  "@loadingTransactionDetails": {
+    "description": "Loading transaction details message"
+  },
+  "amount": "Amount",
+  "@amount": {
+    "description": "Transaction amount label"
+  },
+  "date": "Date",
+  "@date": {
+    "description": "Transaction date label"
+  },
+  "status": "Status",
+  "@status": {
+    "description": "Transaction status label"
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Transaction description label"
+  },
+  "failedToLoadTransactionDetails": "Failed to load transaction details",
+  "@failedToLoadTransactionDetails": {
+    "description": "Error message when transaction details fail to load"
   }
 }

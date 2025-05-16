@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart';
 
-/// Base class for theme events
-abstract class ThemeEvent {}
+/// Theme events
+abstract class ThemeEvent extends Equatable {
+  /// Constructor
+  const ThemeEvent();
 
-/// Event to set light theme
-class SetLightTheme extends ThemeEvent {}
+  @override
+  List<Object?> get props => [];
+}
 
-/// Event to set dark theme
-class SetDarkTheme extends ThemeEvent {}
+/// Set dark theme event
+class SetDarkTheme extends ThemeEvent {
+  /// Constructor
+  const SetDarkTheme();
+}
+
+/// Set light theme event
+class SetLightTheme extends ThemeEvent {
+  /// Constructor
+  const SetLightTheme();
+}
 
 /// Event to set system theme
 class SetSystemTheme extends ThemeEvent {}
@@ -27,9 +40,12 @@ class SetCustomTheme extends ThemeEvent {
   final TextTheme textTheme;
 
   /// Constructor
-  SetCustomTheme({
+  const SetCustomTheme({
     required this.themeMode,
     required this.colorScheme,
     required this.textTheme,
   });
+
+  @override
+  List<Object?> get props => [themeMode, colorScheme, textTheme];
 }

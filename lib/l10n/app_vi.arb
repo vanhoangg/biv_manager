@@ -11,5 +11,15 @@
   "cancel": "Hủy",
   "save": "Lưu",
   "delete": "Xóa",
-  "edit": "Sửa"
+  "edit": "Sửa",
+  "theme": "Giao diện",
+  "about": "Giới thiệu",
+  "logout": "Đăng xuất",
+  "transactionDetails": "Chi tiết giao dịch",
+  "loadingTransactionDetails": "Đang tải chi tiết giao dịch...",
+  "amount": "Số tiền",
+  "date": "Ngày",
+  "status": "Trạng thái",
+  "description": "Mô tả",
+  "failedToLoadTransactionDetails": "Không thể tải chi tiết giao dịch"
 }
