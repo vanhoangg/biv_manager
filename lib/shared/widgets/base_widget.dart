@@ -1,9 +1,9 @@
-import '../constants/app_constants.dart';
-import '../constants/string_constants.dart';
+import 'package:biv_manager/l10n/output/app_localizations.dart';
+import 'package:biv_manager/shared/services/localization_service.dart';
+import 'package:biv_manager/shared/theme/theme_manager.dart';
 import 'package:flutter/material.dart';
-
 import '../../core/di/injection_container.dart';
-import '../../l10n/app_localizations.dart';
+import '../constants/app_constants.dart';
 
 /// Base page widget that all pages will extend
 abstract class BasePage extends BaseStatefulWidget {
@@ -19,21 +19,28 @@ abstract class BaseStatefulWidget extends StatefulWidget {
   const BaseStatefulWidget({super.key});
 }
 
+/// Base state class that provides access to theme, localization, and DI.
+/// Also handles localization errors by showing an error screen.
 abstract class BaseState<T extends BaseStatefulWidget> extends State<T> {
   /// Access to theme
-  ThemeData get theme => Theme.of(context);
-
-  /// Access to localization
-  AppLocalizations? get l10n => AppLocalizations.of(context);
+  ThemeManager get themeManager => sl<ThemeManager>();
 
   /// Access to app constants
   AppConstants get appConstants => sl<AppConstants>();
 
-  /// Access to string constants
-  StringConstants get stringConstants => sl<StringConstants>();
+  /// Access to localization
+  LocalizationService get localizationService => sl<LocalizationService>();
 
-  /// Constructor
-  BaseState();
+  /// This will throw an error if localization is not available
+  AppLocalizations l10nOf(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    if (localizations == null) {
+      throw FlutterError(
+        'Localization not found. Make sure you have wrapped your app with MaterialApp and provided the localization delegates.',
+      );
+    }
+    return localizations;
+  }
 
   @override
   void initState() {
@@ -72,18 +79,25 @@ abstract class BaseState<T extends BaseStatefulWidget> extends State<T> {
   }
 }
 
+/// Base stateless widget that provides access to theme, localization, and DI.
 abstract class BaseStatelessWidget extends StatelessWidget {
   const BaseStatelessWidget({super.key});
 
   /// Access to theme
-  ThemeData theme(BuildContext context) => Theme.of(context);
-
-  /// Access to localization
-  AppLocalizations l10n(BuildContext context) => AppLocalizations.of(context)!;
+  ThemeManager get themeManager => sl<ThemeManager>();
 
   /// Access to app constants
   AppConstants get appConstants => sl<AppConstants>();
 
-  /// Access to string constants
-  StringConstants get stringConstants => sl<StringConstants>();
+  /// Get localization from context
+  /// This will throw an error if localization is not available
+  AppLocalizations l10nOf(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    if (localizations == null) {
+      throw FlutterError(
+        'Localization not found. Make sure you have wrapped your app with MaterialApp and provided the localization delegates.',
+      );
+    }
+    return localizations;
+  }
 }

@@ -29,7 +29,7 @@ class _ProfilePageState extends BaseState<ProfilePage> {
             const Text('Profile Page'),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => context.go(AppConstants.routeLogin),
+              onPressed: () => context.go(AppConstants.routes.login),
               child: const Text('Logout'),
             ),
           ],

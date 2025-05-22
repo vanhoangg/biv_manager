@@ -1,3 +1,4 @@
+import 'package:biv_manager/l10n/output/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -30,16 +31,18 @@ class _LoginPageState extends BaseState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: StringConstants.login,
+      appBar: CustomAppBar(
+        title: l10n?.login ?? '',
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           switch (state) {
             case AuthSuccess():
               print("Success");
-              context.go(AppConstants.routeHome);
+              context.go(AppConstants.routes.home);
             case AuthError():
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.message)),
@@ -59,11 +62,12 @@ class _LoginPageState extends BaseState<LoginPage> {
                 children: [
                   TextFormField(
                     controller: _emailController,
-                    decoration:
-                        const InputDecoration(labelText: StringConstants.email),
+                    decoration: InputDecoration(
+                      labelText: l10n?.email ?? '',
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return StringConstants.errorInvalidEmail;
+                        return l10n?.invalidEmail ?? '';
                       }
                       return null;
                     },
@@ -71,12 +75,13 @@ class _LoginPageState extends BaseState<LoginPage> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
-                    decoration: const InputDecoration(
-                        labelText: StringConstants.password),
+                    decoration: InputDecoration(
+                      labelText: l10n?.password ?? '',
+                    ),
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return StringConstants.errorInvalidPassword;
+                        return l10n?.invalidPassword ?? '';
                       }
                       return null;
                     },
@@ -95,19 +100,19 @@ class _LoginPageState extends BaseState<LoginPage> {
                                   );
                             }
                           },
-                    child: const Text(StringConstants.login),
+                    child: Text(l10n?.login ?? ''),
                   ),
                   TextButton(
                     onPressed: () {
-                      context.go(AppConstants.routeRegister);
+                      context.go(AppConstants.routes.register);
                     },
-                    child: const Text(StringConstants.register),
+                    child: Text(l10n?.register ?? ''),
                   ),
                   TextButton(
                     onPressed: () {
-                      context.go(AppConstants.routeForgotPassword);
+                      context.go(AppConstants.routes.forgotPassword);
                     },
-                    child: const Text(StringConstants.forgotPassword),
+                    child: Text(l10n?.forgotPassword ?? ''),
                   ),
                 ],
               ),

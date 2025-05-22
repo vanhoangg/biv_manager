@@ -19,8 +19,7 @@ class _HomePageState extends BaseState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final isDesktop = ResponsiveBreakpoints.of(context).largerThan(MOBILE);
-    if (l10n == null) return const SizedBox.shrink();
-
+    final theme = Theme.of(context);
     return Scaffold(
       // appBar: const CustomAppBar(title: 'Home'),
       body: Row(

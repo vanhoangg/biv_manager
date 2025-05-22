@@ -10,25 +10,25 @@ class NavigationGuard {
   /// Check if user is authenticated
   static bool isAuthenticated() {
     final prefs = sl<SharedPreferences>();
-    return prefs.getString(AppConstants.storageToken) != null;
+    return prefs.getString(AppConstants.storageKeys.token) != null;
   }
 
   /// Redirect handler for protected routes
   static String? redirect(BuildContext context, GoRouterState state) {
-    final isAuthRoute = state.matchedLocation == AppConstants.routeLogin ||
-        state.matchedLocation == AppConstants.routeRegister ||
-        state.matchedLocation == AppConstants.routeForgotPassword;
+    final isAuthRoute = state.matchedLocation == AppConstants.routes.login ||
+        state.matchedLocation == AppConstants.routes.register ||
+        state.matchedLocation == AppConstants.routes.forgotPassword;
 
     final isAuthenticated = NavigationGuard.isAuthenticated();
 
     // If user is not authenticated and trying to access protected route
     if (!isAuthenticated && !isAuthRoute) {
-      return AppConstants.routeLogin;
+      return AppConstants.routes.login;
     }
 
     // If user is authenticated and trying to access auth route
     if (isAuthenticated && isAuthRoute) {
-      return AppConstants.routeHome;
+      return AppConstants.routes.home;
     }
 
     return null;
@@ -37,18 +37,18 @@ class NavigationGuard {
   static Future<String?> guard(
       BuildContext context, GoRouterState state) async {
     final prefs = sl<SharedPreferences>();
-    final token = prefs.getString(AppConstants.storageToken);
+    final token = prefs.getString(AppConstants.storageKeys.token);
 
-    final isAuthRoute = state.matchedLocation == AppConstants.routeLogin ||
-        state.matchedLocation == AppConstants.routeRegister ||
-        state.matchedLocation == AppConstants.routeForgotPassword;
+    final isAuthRoute = state.matchedLocation == AppConstants.routes.login ||
+        state.matchedLocation == AppConstants.routes.register ||
+        state.matchedLocation == AppConstants.routes.forgotPassword;
 
     if (token == null && !isAuthRoute) {
-      return AppConstants.routeLogin;
+      return AppConstants.routes.login;
     }
 
     if (token != null && isAuthRoute) {
-      return AppConstants.routeHome;
+      return AppConstants.routes.home;
     }
 
     return null;

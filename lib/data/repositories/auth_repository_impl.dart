@@ -24,8 +24,8 @@ class AuthRepositoryImpl implements AuthRepository {
       throw Exception('User ID is null after sign in');
     }
     // Save token in shared preferences
-    sl<SharedPreferences>()
-        .setString(AppConstants.storageToken, userCredential.user?.uid ?? '');
+    sl<SharedPreferences>().setString(
+        AppConstants.storageKeys.token, userCredential.user?.uid ?? '');
   }
 
   @override
@@ -43,8 +43,8 @@ class AuthRepositoryImpl implements AuthRepository {
           photoUrl: null,
           accessToken: 'test-access-token',
         );
-        sl<SharedPreferences>()
-            .setString(AppConstants.storageToken, mockUser.accessToken ?? '');
+        sl<SharedPreferences>().setString(
+            AppConstants.storageKeys.token, mockUser.accessToken ?? '');
         return mockUser;
       }
 

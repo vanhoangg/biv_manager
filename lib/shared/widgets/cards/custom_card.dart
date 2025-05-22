@@ -26,7 +26,7 @@ class CustomCard extends BaseStatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentTheme = theme(context);
+    final currentTheme = Theme.of(context);
 
     return Card(
       elevation: elevation ?? 2,

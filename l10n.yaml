@@ -1,5 +1,61 @@
+# Flutter Internationalization Configuration
+# This file configures how Flutter generates localization code from ARB files
+
+# Directory containing the ARB files
 arb-dir: lib/l10n
+
+# The template ARB file that defines the base locale (usually English)
 template-arb-file: app_en.arb
+
+# The name of the generated localization file
 output-localization-file: app_localizations.dart
+
+# The name of the generated localization class
 output-class: AppLocalizations
-output-dir: lib/l10n
+
+# Directory where the generated localization files will be placed
+output-dir: lib/l10n/output
+
+# List of locales that should be included in the generated code
+# These locales must have corresponding ARB files in the arb-dir
+preferred-supported-locales: [en, vi]
+
+# Whether to use deferred loading for locale data
+# Set to false for immediate loading of all locales
+use-deferred-loading: true
+
+# Whether to generate a synthetic package for the localization files
+# Set to false to keep the generated files in the main package
+synthetic-package: false
+
+# Whether to generate nullable getters for localization strings
+# Set to true for null-safe code
+nullable-getter: true
+
+# Whether to format the generated code
+# Set to true for consistent code style
+format: true
+
+# Maximum line length for the generated code
+# Set to 80 for consistent code style
+line-length: 80
+
+# File to output untranslated messages
+# This helps track missing translations
+untranslated-messages-file: lib/l10n/output/untranslated-messages.txt
+
+# Whether to validate ARB files
+# Set to true to ensure all required translations are present
+validate-arb: true
+
+# Whether to validate locale codes
+# Set to true to ensure locale codes are valid
+validate-locale-codes: true
+
+# Whether to validate placeholders
+# Set to true to ensure placeholders are consistent across locales
+validate-placeholders: true
+
+# Whether to validate plurals
+# Set to true to ensure plural forms are consistent across locales
+validate-plurals: true

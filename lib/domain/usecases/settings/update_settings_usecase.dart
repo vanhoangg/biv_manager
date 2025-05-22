@@ -1,5 +1,4 @@
-import 'package:dartz/dartz.dart';
-
+import '../../../../core/result.dart';
 import '../../entities/settings_entity.dart';
 import '../../repositories/settings_repository.dart';
 
@@ -11,16 +10,15 @@ class UpdateSettingsUseCase {
   UpdateSettingsUseCase(this._repository);
 
   /// Execute the use case
-  Future<Either<Exception, SettingsEntity>> call(
-      SettingsEntity settings) async {
+  Future<Result<SettingsEntity>> call(SettingsEntity settings) async {
     try {
       final updatedSettings = await _repository.updateSettings(settings);
       if (updatedSettings != null) {
-        return Right(updatedSettings);
+        return Result.ok(updatedSettings);
       }
-      return Left(Exception('Failed to update settings'));
+      return Result.error(Exception('Failed to update settings'));
     } catch (e) {
-      return Left(Exception(e.toString()));
+      return Result.error(Exception(e.toString()));
     }
   }
 }

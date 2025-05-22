@@ -33,9 +33,6 @@ Future<void> init() async {
   // App constants
   sl.registerLazySingleton(() => AppConstants());
 
-  // String constants
-  sl.registerLazySingleton(() => StringConstants());
-
   // Firebase services
   sl.registerLazySingleton(() => FirebaseAuth.instance);
   sl.registerLazySingleton(() => FirebaseFirestore.instance);

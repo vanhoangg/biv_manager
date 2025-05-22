@@ -27,7 +27,8 @@ class _CustomersPageState extends BaseState<CustomersPage> {
             const Text('Customers Page'),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => context.push('${AppConstants.routeCustomers}/1'),
+              onPressed: () =>
+                  context.push('${AppConstants.routes.customers}/1'),
               child: const Text('View Customer Details'),
             ),
           ],

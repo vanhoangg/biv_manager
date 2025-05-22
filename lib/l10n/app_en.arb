@@ -1,4 +1,5 @@
 {
+  "@@locale": "en",
   "appName": "Biv Manager",
   "@appName": {
     "description": "The name of the application"
@@ -9,7 +10,7 @@
   },
   "language": "Language",
   "@language": {
-    "description": "Language selection"
+    "description": "Language setting text"
   },
   "textDirection": "Text Direction",
   "@textDirection": {
@@ -53,11 +54,11 @@
   },
   "theme": "Theme",
   "@theme": {
-    "description": "Theme selection"
+    "description": "Theme setting text"
   },
   "about": "About",
   "@about": {
-    "description": "About page title"
+    "description": "About section text"
   },
   "logout": "Logout",
   "@logout": {
@@ -102,5 +103,455 @@
   "category": "Category",
   "@category": {
     "description": "Category label"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Back button text"
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Next button text"
+  },
+  "done": "Done",
+  "@done": {
+    "description": "Done button text"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Search button text"
+  },
+  "noData": "No data available",
+  "@noData": {
+    "description": "No data message"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Confirm button text"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button text"
+  },
+  "register": "Register",
+  "@register": {
+    "description": "Register button text"
+  },
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {
+    "description": "Forgot password link text"
+  },
+  "resetPassword": "Reset Password",
+  "@resetPassword": {
+    "description": "Reset password button text"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "Name field label"
+  },
+  "phone": "Phone",
+  "@phone": {
+    "description": "Phone field label"
+  },
+  "loginSuccess": "Login successful",
+  "@loginSuccess": {
+    "description": "Login success message"
+  },
+  "registerSuccess": "Registration successful",
+  "@registerSuccess": {
+    "description": "Registration success message"
+  },
+  "passwordResetSuccess": "Password reset successful",
+  "@passwordResetSuccess": {
+    "description": "Password reset success message"
+  },
+  "invalidEmail": "Invalid email address",
+  "@invalidEmail": {
+    "description": "Invalid email error message"
+  },
+  "invalidPassword": "Invalid password",
+  "@invalidPassword": {
+    "description": "Invalid password error message"
+  },
+  "invalidName": "Invalid name",
+  "@invalidName": {
+    "description": "Invalid name error message"
+  },
+  "invalidPhone": "Invalid phone number",
+  "@invalidPhone": {
+    "description": "Invalid phone error message"
+  },
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Password mismatch error message"
+  },
+  "emailAlreadyInUse": "Email already in use",
+  "@emailAlreadyInUse": {
+    "description": "Email in use error message"
+  },
+  "userNotFound": "User not found",
+  "@userNotFound": {
+    "description": "User not found error message"
+  },
+  "wrongPassword": "Wrong password",
+  "@wrongPassword": {
+    "description": "Wrong password error message"
+  },
+  "weakPassword": "Password is too weak",
+  "@weakPassword": {
+    "description": "Weak password error message"
+  },
+  "dashboard": "Dashboard",
+  "@dashboard": {
+    "description": "Dashboard navigation item"
+  },
+  "customers": "Customers",
+  "@customers": {
+    "description": "Customers navigation item"
+  },
+  "transactions": "Transactions",
+  "@transactions": {
+    "description": "Transactions navigation item"
+  },
+  "reports": "Reports",
+  "@reports": {
+    "description": "Reports navigation item"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile navigation item"
+  },
+  "totalCustomers": "Total Customers",
+  "@totalCustomers": {
+    "description": "Total customers label"
+  },
+  "totalTransactions": "Total Transactions",
+  "@totalTransactions": {
+    "description": "Total transactions label"
+  },
+  "totalDebt": "Total Debt",
+  "@totalDebt": {
+    "description": "Total debt label"
+  },
+  "recentTransactions": "Recent Transactions",
+  "@recentTransactions": {
+    "description": "Recent transactions label"
+  },
+  "viewAll": "View All",
+  "@viewAll": {
+    "description": "View all button text"
+  },
+  "customerDetails": "Customer Details",
+  "@customerDetails": {
+    "description": "Customer details title"
+  },
+  "addCustomer": "Add Customer",
+  "@addCustomer": {
+    "description": "Add customer button text"
+  },
+  "editCustomer": "Edit Customer",
+  "@editCustomer": {
+    "description": "Edit customer button text"
+  },
+  "customerName": "Customer Name",
+  "@customerName": {
+    "description": "Customer name label"
+  },
+  "customerPhone": "Customer Phone",
+  "@customerPhone": {
+    "description": "Customer phone label"
+  },
+  "customerEmail": "Customer Email",
+  "@customerEmail": {
+    "description": "Customer email label"
+  },
+  "customerAddress": "Customer Address",
+  "@customerAddress": {
+    "description": "Customer address label"
+  },
+  "customerNotes": "Customer Notes",
+  "@customerNotes": {
+    "description": "Customer notes label"
+  },
+  "customerDebt": "Customer Debt",
+  "@customerDebt": {
+    "description": "Customer debt label"
+  },
+  "customerStatus": "Customer Status",
+  "@customerStatus": {
+    "description": "Customer status label"
+  },
+  "active": "Active",
+  "@active": {
+    "description": "Active status"
+  },
+  "inactive": "Inactive",
+  "@inactive": {
+    "description": "Inactive status"
+  },
+  "addTransaction": "Add Transaction",
+  "@addTransaction": {
+    "description": "Add transaction button text"
+  },
+  "editTransaction": "Edit Transaction",
+  "@editTransaction": {
+    "description": "Edit transaction button text"
+  },
+  "transactionType": "Transaction Type",
+  "@transactionType": {
+    "description": "Transaction type label"
+  },
+  "transactionAmount": "Transaction Amount",
+  "@transactionAmount": {
+    "description": "Transaction amount label"
+  },
+  "transactionDate": "Transaction Date",
+  "@transactionDate": {
+    "description": "Transaction date label"
+  },
+  "transactionNotes": "Transaction Notes",
+  "@transactionNotes": {
+    "description": "Transaction notes label"
+  },
+  "transactionStatus": "Transaction Status",
+  "@transactionStatus": {
+    "description": "Transaction status label"
+  },
+  "pending": "Pending",
+  "@pending": {
+    "description": "Pending status"
+  },
+  "completed": "Completed",
+  "@completed": {
+    "description": "Completed status"
+  },
+  "cancelled": "Cancelled",
+  "@cancelled": {
+    "description": "Cancelled status"
+  },
+  "dailyReport": "Daily Report",
+  "@dailyReport": {
+    "description": "Daily report label"
+  },
+  "weeklyReport": "Weekly Report",
+  "@weeklyReport": {
+    "description": "Weekly report label"
+  },
+  "monthlyReport": "Monthly Report",
+  "@monthlyReport": {
+    "description": "Monthly report label"
+  },
+  "yearlyReport": "Yearly Report",
+  "@yearlyReport": {
+    "description": "Yearly report label"
+  },
+  "customReport": "Custom Report",
+  "@customReport": {
+    "description": "Custom report label"
+  },
+  "startDate": "Start Date",
+  "@startDate": {
+    "description": "Start date label"
+  },
+  "endDate": "End Date",
+  "@endDate": {
+    "description": "End date label"
+  },
+  "generateReport": "Generate Report",
+  "@generateReport": {
+    "description": "Generate report button text"
+  },
+  "exportReport": "Export Report",
+  "@exportReport": {
+    "description": "Export report button text"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications setting label"
+  },
+  "version": "Version",
+  "@version": {
+    "description": "Version label"
+  },
+  "termsOfService": "Terms of Service",
+  "@termsOfService": {
+    "description": "Terms of service label"
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Title for privacy policy page"
+  },
+  "privacyPolicyLastUpdated": "Last updated: {date}",
+  "@privacyPolicyLastUpdated": {
+    "description": "Last updated date for privacy policy",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "2024-03-20"
+      }
+    }
+  },
+  "privacyPolicyIntroduction": "Welcome to {appName}. We respect your privacy and are committed to protecting your personal data.",
+  "@privacyPolicyIntroduction": {
+    "description": "Introduction for privacy policy",
+    "placeholders": {
+      "appName": {
+        "type": "String",
+        "example": "Biv Manager"
+      }
+    }
+  },
+  "privacyPolicyDataCollection": "Data Collection",
+  "@privacyPolicyDataCollection": {
+    "description": "Title for data collection section"
+  },
+  "privacyPolicyDataCollectionContent": "We collect information that you provide directly to us, including your name, email address, and any other information you choose to provide.",
+  "@privacyPolicyDataCollectionContent": {
+    "description": "Content for data collection section"
+  },
+  "privacyPolicyDataUsage": "Data Usage",
+  "@privacyPolicyDataUsage": {
+    "description": "Title for data usage section"
+  },
+  "privacyPolicyDataUsageContent": "We use the information we collect to provide, maintain, and improve our services, to develop new ones, and to protect our company and users.",
+  "@privacyPolicyDataUsageContent": {
+    "description": "Content for data usage section"
+  },
+  "privacyPolicySecurity": "Data Security",
+  "@privacyPolicySecurity": {
+    "description": "Title for security section"
+  },
+  "privacyPolicySecurityContent": "We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction.",
+  "@privacyPolicySecurityContent": {
+    "description": "Content for security section"
+  },
+  "privacyPolicyRights": "Your Rights",
+  "@privacyPolicyRights": {
+    "description": "Title for user rights section"
+  },
+  "privacyPolicyRightsContent": "You have the right to access, correct, or delete your personal data. You can also object to our processing of your data.",
+  "@privacyPolicyRightsContent": {
+    "description": "Content for user rights section"
+  },
+  "privacyPolicyContact": "Contact Us",
+  "@privacyPolicyContact": {
+    "description": "Title for contact section"
+  },
+  "privacyPolicyContactContent": "If you have any questions about our Privacy Policy, please contact us at privacy@bivmanager.com",
+  "@privacyPolicyContactContent": {
+    "description": "Content for contact section"
+  },
+  "termsAndConditions": "Terms and Conditions",
+  "@termsAndConditions": {
+    "description": "Title for terms and conditions page"
+  },
+  "termsLastUpdated": "Last updated: {date}",
+  "@termsLastUpdated": {
+    "description": "Last updated date for terms",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "2024-03-20"
+      }
+    }
+  },
+  "termsAgreement": "Agreement to Terms",
+  "@termsAgreement": {
+    "description": "Title for agreement section"
+  },
+  "termsAgreementContent": "By accessing and using {appName}, you agree to be bound by these Terms and Conditions.",
+  "@termsAgreementContent": {
+    "description": "Content for agreement section",
+    "placeholders": {
+      "appName": {
+        "type": "String",
+        "example": "Biv Manager"
+      }
+    }
+  },
+  "termsLicense": "License",
+  "@termsLicense": {
+    "description": "Title for license section"
+  },
+  "termsLicenseContent": "We grant you a limited, non-exclusive, non-transferable license to use the app for your personal or business purposes.",
+  "@termsLicenseContent": {
+    "description": "Content for license section"
+  },
+  "termsAccount": "Account Terms",
+  "@termsAccount": {
+    "description": "Title for account terms section"
+  },
+  "termsAccountContent": "You are responsible for maintaining the confidentiality of your account and password.",
+  "@termsAccountContent": {
+    "description": "Content for account terms section"
+  },
+  "termsDisclaimer": "Disclaimer",
+  "@termsDisclaimer": {
+    "description": "Title for disclaimer section"
+  },
+  "termsDisclaimerContent": "{appName} is provided 'as is' without any warranties, expressed or implied.",
+  "@termsDisclaimerContent": {
+    "description": "Content for disclaimer section",
+    "placeholders": {
+      "appName": {
+        "type": "String",
+        "example": "Biv Manager"
+      }
+    }
+  },
+  "termsLimitations": "Limitations",
+  "@termsLimitations": {
+    "description": "Title for limitations section"
+  },
+  "termsLimitationsContent": "In no event shall {appName} be liable for any damages arising out of the use or inability to use the app.",
+  "@termsLimitationsContent": {
+    "description": "Content for limitations section",
+    "placeholders": {
+      "appName": {
+        "type": "String",
+        "example": "Biv Manager"
+      }
+    }
+  },
+  "termsRevisions": "Revisions",
+  "@termsRevisions": {
+    "description": "Title for revisions section"
+  },
+  "termsRevisionsContent": "{appName} reserves the right to revise these terms at any time without notice.",
+  "@termsRevisionsContent": {
+    "description": "Content for revisions section",
+    "placeholders": {
+      "appName": {
+        "type": "String",
+        "example": "Biv Manager"
+      }
+    }
+  },
+  "termsGoverningLaw": "Governing Law",
+  "@termsGoverningLaw": {
+    "description": "Title for governing law section"
+  },
+  "termsGoverningLawContent": "These terms shall be governed by and construed in accordance with the laws of your jurisdiction.",
+  "@termsGoverningLawContent": {
+    "description": "Content for governing law section"
+  },
+  "termsContact": "Contact Us",
+  "@termsContact": {
+    "description": "Title for contact section"
+  },
+  "termsContactContent": "If you have any questions about these Terms, please contact us at support@bivmanager.com",
+  "@termsContactContent": {
+    "description": "Content for contact section"
   }
 }

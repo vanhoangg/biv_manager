@@ -1,4 +1,3 @@
-import '../../theme/theme_inherited_widget.dart';
 import '../base_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +45,7 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
             IconButton(
               icon: const Icon(Icons.brightness_6),
               onPressed: () {
-                ThemeInheritedWidget.of(context).themeManager.toggleTheme();
+                themeManager.toggleTheme();
               },
             ),
           ],

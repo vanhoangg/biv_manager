@@ -3,67 +3,102 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/app_constants.dart';
 
-/// Service to manage text direction (RTL/LTR) in the app
+/// Service to handle Right-to-Left (RTL) text direction
 class RTLService extends ChangeNotifier {
+  /// Shared preferences instance
   final SharedPreferences _prefs;
+
+  /// Current text direction
   TextDirection _textDirection = TextDirection.ltr;
 
+  /// Get current text direction
+  TextDirection get textDirection => _textDirection;
+
+  /// Constructor
   RTLService(this._prefs) {
     _loadTextDirection();
   }
 
-  /// Get the current text direction
-  TextDirection get textDirection => _textDirection;
-
-  /// Check if the current direction is RTL
-  bool get isRTL => _textDirection == TextDirection.rtl;
-
-  /// Load saved text direction from preferences
+  /// Load saved text direction from shared preferences
   Future<void> _loadTextDirection() async {
-    final direction = _prefs.getString(AppConstants.storageDirection);
-    if (direction != null) {
-      _textDirection =
-          direction == 'rtl' ? TextDirection.rtl : TextDirection.ltr;
-      notifyListeners();
-    }
+    final isRTL = _prefs.getBool(AppConstants.storageKeys.isRTL) ?? false;
+    _textDirection = isRTL ? TextDirection.rtl : TextDirection.ltr;
+    notifyListeners();
   }
 
-  /// Save text direction to preferences
-  Future<void> _saveTextDirection() async {
-    await _prefs.setString(
-      AppConstants.storageDirection,
-      _textDirection == TextDirection.rtl ? 'rtl' : 'ltr',
-    );
-  }
-
-  /// Set text direction
+  /// Save text direction to shared preferences
   Future<void> setTextDirection(TextDirection direction) async {
     if (_textDirection != direction) {
       _textDirection = direction;
-      await _saveTextDirection();
+      await _prefs.setBool(
+        AppConstants.storageKeys.isRTL,
+        direction == TextDirection.rtl,
+      );
       notifyListeners();
     }
   }
 
-  /// Toggle between RTL and LTR
-  Future<void> toggleDirection() async {
-    await setTextDirection(
+  /// Set RTL text direction
+  void setRTL() {
+    setTextDirection(TextDirection.rtl);
+  }
+
+  /// Set LTR text direction
+  void setLTR() {
+    setTextDirection(TextDirection.ltr);
+  }
+
+  /// Toggle text direction
+  void toggleTextDirection() {
+    setTextDirection(
       _textDirection == TextDirection.ltr
           ? TextDirection.rtl
           : TextDirection.ltr,
     );
   }
 
-  /// Get supported text directions
-  static List<TextDirection> get supportedDirections => [
-        TextDirection.ltr,
-        TextDirection.rtl,
-      ];
+  /// Check if current text direction is RTL
+  bool get isRTL => _textDirection == TextDirection.rtl;
 
-  /// Get direction name
-  static String getDirectionName(TextDirection direction) {
-    return direction == TextDirection.ltr
-        ? AppConstants.rtlLeftToRight
-        : AppConstants.rtlRightToLeft;
+  /// Get alignment based on text direction
+  Alignment get alignment =>
+      isRTL ? Alignment.centerRight : Alignment.centerLeft;
+
+  /// Get start alignment based on text direction
+  Alignment get startAlignment =>
+      isRTL ? Alignment.centerRight : Alignment.centerLeft;
+
+  /// Get end alignment based on text direction
+  Alignment get endAlignment =>
+      isRTL ? Alignment.centerLeft : Alignment.centerRight;
+
+  /// Get padding based on text direction
+  EdgeInsetsDirectional getDirectionalPadding({
+    double start = 0.0,
+    double end = 0.0,
+    double top = 0.0,
+    double bottom = 0.0,
+  }) {
+    return EdgeInsetsDirectional.only(
+      start: start,
+      end: end,
+      top: top,
+      bottom: bottom,
+    );
+  }
+
+  /// Get margin based on text direction
+  EdgeInsetsDirectional getDirectionalMargin({
+    double start = 0.0,
+    double end = 0.0,
+    double top = 0.0,
+    double bottom = 0.0,
+  }) {
+    return EdgeInsetsDirectional.only(
+      start: start,
+      end: end,
+      top: top,
+      bottom: bottom,
+    );
   }
 }

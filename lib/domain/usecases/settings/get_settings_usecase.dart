@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import '../../../../core/result.dart';
 import '../../entities/settings_entity.dart';
 import '../../repositories/settings_repository.dart';
 
@@ -10,12 +10,12 @@ class GetSettingsUseCase {
   GetSettingsUseCase(this._repository);
 
   /// Execute the use case
-  Future<Either<Exception, SettingsEntity>> call() async {
+  Future<Result<SettingsEntity>> call() async {
     try {
       final settings = await _repository.getSettings();
-      return Right(settings);
+      return Result.ok(settings);
     } catch (e) {
-      return Left(Exception(e.toString()));
+      return Result.error(Exception(e.toString()));
     }
   }
 }

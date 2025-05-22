@@ -1,3 +1,4 @@
+import 'package:biv_manager/l10n/output/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,7 @@ class LocalizationService extends ChangeNotifier {
 
   /// Get localization delegates
   static List<LocalizationsDelegate<dynamic>> get localizationsDelegates => [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -26,7 +28,8 @@ class LocalizationService extends ChangeNotifier {
   /// Get current locale
   Future<Locale> getCurrentLocale() async {
     final prefs = await SharedPreferences.getInstance();
-    final languageCode = prefs.getString(AppConstants.keyLanguage) ?? 'en';
+    final languageCode =
+        prefs.getString(AppConstants.storageKeys.language) ?? 'en';
     _locale = Locale(languageCode);
     notifyListeners();
     return _locale;
@@ -35,7 +38,7 @@ class LocalizationService extends ChangeNotifier {
   /// Set current locale
   Future<void> setCurrentLocale(String languageCode) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(AppConstants.keyLanguage, languageCode);
+    await prefs.setString(AppConstants.storageKeys.language, languageCode);
     _locale = Locale(languageCode);
     notifyListeners();
   }

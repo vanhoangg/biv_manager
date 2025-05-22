@@ -1,3 +1,4 @@
+import 'package:biv_manager/l10n/output/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -28,15 +29,17 @@ class _ForgotPasswordPageState extends BaseState<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Scaffold(
-      appBar: const CustomAppBar(title: StringConstants.forgotPassword),
+      appBar: CustomAppBar(title: l10n?.forgotPassword ?? ''),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Password reset link sent.')),
             );
-            context.go(AppConstants.routeLogin);
+            context.go(AppConstants.routes.login);
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
@@ -52,12 +55,12 @@ class _ForgotPasswordPageState extends BaseState<ForgotPasswordPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomTextField(
-                    label: StringConstants.email,
+                    label: l10n?.email ?? '',
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return StringConstants.errorInvalidEmail;
+                        return l10n?.invalidEmail ?? '';
                       }
                       return null;
                     },
@@ -80,9 +83,9 @@ class _ForgotPasswordPageState extends BaseState<ForgotPasswordPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      context.go(AppConstants.routeLogin);
+                      context.go(AppConstants.routes.login);
                     },
-                    child: const Text(StringConstants.login),
+                    child: Text(l10n?.login ?? ''),
                   ),
                 ],
               ),

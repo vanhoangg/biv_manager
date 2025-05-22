@@ -1,3 +1,4 @@
+import 'package:biv_manager/l10n/output/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -40,13 +41,14 @@ class _RegisterPageState extends BaseState<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: const CustomAppBar(title: StringConstants.register),
+      appBar: CustomAppBar(title: l10n?.register ?? ''),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           switch (state) {
             case AuthSuccess():
-              context.go(AppConstants.routeHome);
+              context.go(AppConstants.routes.home);
               return;
             case AuthError():
               ScaffoldMessenger.of(context).showSnackBar(
@@ -64,36 +66,36 @@ class _RegisterPageState extends BaseState<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomTextField(
-                    label: StringConstants.email,
+                    label: l10n?.email ?? '',
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return StringConstants.errorInvalidEmail;
+                        return l10n?.invalidEmail ?? '';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(
-                    label: StringConstants.password,
+                    label: l10n?.password ?? '',
                     controller: _passwordController,
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return StringConstants.errorInvalidPassword;
+                        return l10n?.invalidPassword ?? '';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(
-                    label: StringConstants.confirmPassword,
+                    label: l10n?.confirmPassword ?? '',
                     controller: _confirmPasswordController,
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return StringConstants.errorInvalidPassword;
+                        return l10n?.invalidPassword ?? '';
                       }
                       if (value != _passwordController.text) {
                         return 'Passwords do not match';
@@ -103,7 +105,7 @@ class _RegisterPageState extends BaseState<RegisterPage> {
                   ),
                   const SizedBox(height: 24),
                   CustomButton(
-                    text: StringConstants.register,
+                    text: l10n?.register ?? '',
                     onPressed: state is AuthLoading
                         ? null
                         : () {
@@ -120,9 +122,9 @@ class _RegisterPageState extends BaseState<RegisterPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      context.go(AppConstants.routeLogin);
+                      context.go(AppConstants.routes.login);
                     },
-                    child: const Text(StringConstants.login),
+                    child: Text(l10n?.login ?? ''),
                   ),
                 ],
               ),

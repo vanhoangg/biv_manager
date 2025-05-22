@@ -51,3 +51,27 @@ class UpdateLanguage extends SettingsEvent {
   @override
   List<Object?> get props => [languageCode, countryCode];
 }
+
+/// Event to update font family
+class UpdateFontFamily extends SettingsEvent {
+  /// Constructor
+  const UpdateFontFamily(this.fontFamily);
+
+  /// Font family name
+  final String fontFamily;
+
+  @override
+  List<Object?> get props => [fontFamily];
+}
+
+/// Event to update font size
+class UpdateFontSize extends SettingsEvent {
+  /// Constructor
+  const UpdateFontSize(this.fontSize);
+
+  /// Font size multiplier
+  final double fontSize;
+
+  @override
+  List<Object?> get props => [fontSize];
+}

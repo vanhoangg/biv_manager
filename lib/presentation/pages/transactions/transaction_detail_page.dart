@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../../shared/index.dart';
 import '../../../domain/entities/transaction_entity.dart';
 import '../../blocs/transaction_detail/transaction_detail_bloc.dart';
@@ -27,7 +26,7 @@ class TransactionDetailPage extends BasePage {
 class _TransactionDetailPageState extends BaseState<TransactionDetailPage> {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = l10nOf(context);
     return Scaffold(
       appBar: CustomAppBar(
         title: widget.pageTitle,
@@ -61,7 +60,7 @@ class _TransactionDetailPageState extends BaseState<TransactionDetailPage> {
                             ),
                           );
                     },
-                    child: Text(l10n?.retry ?? 'Retry'),
+                    child: Text(l10n.retry),
                   ),
                 ],
               ),
@@ -135,6 +134,7 @@ class _TransactionDetailPageState extends BaseState<TransactionDetailPage> {
 
   Widget _buildDetailsSection(
       BuildContext context, TransactionEntity transaction) {
+    final l10n = l10nOf(context);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -152,25 +152,25 @@ class _TransactionDetailPageState extends BaseState<TransactionDetailPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)?.details ?? 'Details',
+            l10n.details,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
           _buildDetailRow(
             context,
-            AppLocalizations.of(context)?.date ?? 'Date',
+            l10n.date,
             LocaleFormatter.formatDateTime(context, transaction.date),
           ),
           const SizedBox(height: 12),
           _buildDetailRow(
             context,
-            AppLocalizations.of(context)?.status ?? 'Status',
+            l10n.status,
             transaction.status.toUpperCase(),
           ),
           const SizedBox(height: 12),
           _buildDetailRow(
             context,
-            AppLocalizations.of(context)?.category ?? 'Category',
+            l10n.category,
             transaction.category,
           ),
         ],
@@ -180,6 +180,7 @@ class _TransactionDetailPageState extends BaseState<TransactionDetailPage> {
 
   Widget _buildDescriptionSection(
       BuildContext context, TransactionEntity transaction) {
+    final l10n = l10nOf(context);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -197,7 +198,7 @@ class _TransactionDetailPageState extends BaseState<TransactionDetailPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)?.description ?? 'Description',
+            l10n.description,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),

@@ -1,7 +1,6 @@
 import '../buttons/custom_button.dart';
 import 'package:flutter/material.dart';
 
-import '../../../l10n/app_localizations.dart';
 import '../base_widget.dart';
 import 'custom_dialog.dart';
 
@@ -22,9 +21,7 @@ class LanguageSelectionDialog extends BaseStatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    if (l10n == null) return const SizedBox.shrink();
-
+    final l10n = l10nOf(context);
     return CustomDialog(
       title: l10n.language,
       content: Column(

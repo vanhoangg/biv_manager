@@ -29,7 +29,7 @@ class _TransactionsPageState extends BaseState<TransactionsPage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () =>
-                  context.push('${AppConstants.routeTransactions}/1'),
+                  context.push('${AppConstants.routes.transactions}/1'),
               child: const Text('View Transaction Details'),
             ),
           ],

@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 /// Entity class representing application settings
 /// This is the core business object used throughout the application
-class SettingsEntity {
+class SettingsEntity extends Equatable {
   /// Theme settings
   final bool isDarkMode;
   final String themeColor;
@@ -50,6 +52,27 @@ class SettingsEntity {
     this.useSystemFont = true,
     this.fontFamily = 'Roboto',
   });
+
+  @override
+  List<Object?> get props => [
+        isDarkMode,
+        themeColor,
+        languageCode,
+        countryCode,
+        enablePushNotifications,
+        enableEmailNotifications,
+        notificationTypes,
+        autoPlayVideos,
+        enableHapticFeedback,
+        enableSoundEffects,
+        cacheSizeLimit,
+        enableAnalytics,
+        enableCrashReporting,
+        enableLocationServices,
+        fontSize,
+        useSystemFont,
+        fontFamily,
+      ];
 
   /// Create a copy of this SettingsEntity with the given fields replaced with the new values
   SettingsEntity copyWith({

@@ -20,6 +20,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdateSettings>(_onUpdateSettings);
     on<ToggleDarkMode>(_onToggleDarkMode);
     on<UpdateLanguage>(_onUpdateLanguage);
+    on<UpdateFontFamily>(_onUpdateFontFamily);
+    on<UpdateFontSize>(_onUpdateFontSize);
   }
 
   Future<void> _onLoadSettings(
@@ -81,6 +83,40 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         final updatedSettings = currentState.settings.copyWith(
           languageCode: event.languageCode,
           countryCode: event.countryCode,
+        );
+        add(UpdateSettings(updatedSettings));
+      }
+    } catch (e) {
+      emit(SettingsError(e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateFontFamily(
+    UpdateFontFamily event,
+    Emitter<SettingsState> emit,
+  ) async {
+    try {
+      final currentState = state;
+      if (currentState is SettingsLoaded) {
+        final updatedSettings = currentState.settings.copyWith(
+          fontFamily: event.fontFamily,
+        );
+        add(UpdateSettings(updatedSettings));
+      }
+    } catch (e) {
+      emit(SettingsError(e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateFontSize(
+    UpdateFontSize event,
+    Emitter<SettingsState> emit,
+  ) async {
+    try {
+      final currentState = state;
+      if (currentState is SettingsLoaded) {
+        final updatedSettings = currentState.settings.copyWith(
+          fontSize: event.fontSize,
         );
         add(UpdateSettings(updatedSettings));
       }

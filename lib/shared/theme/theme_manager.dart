@@ -12,17 +12,24 @@ class ThemeManager extends ChangeNotifier {
   /// Current theme mode
   ThemeMode _themeMode = ThemeMode.system;
 
+  /// Current text direction
+  TextDirection _textDirection = TextDirection.ltr;
+
   /// Get current theme mode
   ThemeMode get themeMode => _themeMode;
+
+  /// Get current text direction
+  TextDirection get textDirection => _textDirection;
 
   /// Constructor
   ThemeManager(this._prefs) {
     _loadThemeMode();
+    _loadTextDirection();
   }
 
   /// Load saved theme from shared preferences
   Future<void> _loadThemeMode() async {
-    final themeMode = _prefs.getString(AppConstants.storageTheme);
+    final themeMode = _prefs.getString(AppConstants.storageKeys.theme);
     if (themeMode != null) {
       _themeMode = ThemeMode.values.firstWhere(
         (mode) => mode.toString() == themeMode,
@@ -32,13 +39,81 @@ class ThemeManager extends ChangeNotifier {
     }
   }
 
+  /// Load saved text direction from shared preferences
+  Future<void> _loadTextDirection() async {
+    final isRTL = _prefs.getBool(AppConstants.storageKeys.isRTL) ?? false;
+    _textDirection = isRTL ? TextDirection.rtl : TextDirection.ltr;
+    notifyListeners();
+  }
+
   /// Save theme to shared preferences
   Future<void> setThemeMode(ThemeMode mode) async {
     if (_themeMode != mode) {
       _themeMode = mode;
-      await _prefs.setString(AppConstants.storageTheme, mode.toString());
+      await _prefs.setString(AppConstants.storageKeys.theme, mode.toString());
       notifyListeners();
     }
+  }
+
+  /// Save text direction to shared preferences
+  Future<void> setTextDirection(TextDirection direction) async {
+    if (_textDirection != direction) {
+      _textDirection = direction;
+      await _prefs.setBool(
+        AppConstants.storageKeys.isRTL,
+        direction == TextDirection.rtl,
+      );
+      notifyListeners();
+    }
+  }
+
+  /// Set RTL text direction
+  Future<void> setRTL() async {
+    await setTextDirection(TextDirection.rtl);
+  }
+
+  /// Set LTR text direction
+  Future<void> setLTR() async {
+    await setTextDirection(TextDirection.ltr);
+  }
+
+  /// Toggle text direction
+  Future<void> toggleTextDirection() async {
+    await setTextDirection(
+      _textDirection == TextDirection.ltr
+          ? TextDirection.rtl
+          : TextDirection.ltr,
+    );
+  }
+
+  /// Get directional padding
+  EdgeInsetsDirectional getDirectionalPadding({
+    double start = 0.0,
+    double end = 0.0,
+    double top = 0.0,
+    double bottom = 0.0,
+  }) {
+    return EdgeInsetsDirectional.only(
+      start: start,
+      end: end,
+      top: top,
+      bottom: bottom,
+    );
+  }
+
+  /// Get directional margin
+  EdgeInsetsDirectional getDirectionalMargin({
+    double start = 0.0,
+    double end = 0.0,
+    double top = 0.0,
+    double bottom = 0.0,
+  }) {
+    return EdgeInsetsDirectional.only(
+      start: start,
+      end: end,
+      top: top,
+      bottom: bottom,
+    );
   }
 
   /// Set light theme

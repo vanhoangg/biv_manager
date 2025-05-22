@@ -19,57 +19,57 @@ import '../../presentation/pages/about/about_page.dart';
 class AppRouter {
   /// GoRouter instance
   static final router = GoRouter(
-    initialLocation: AppConstants.routeSplash,
+    initialLocation: AppConstants.routes.splash,
     redirect: NavigationGuard.redirect,
     routes: [
       GoRoute(
-        path: AppConstants.routeSplash,
+        path: AppConstants.routes.splash,
         builder: (context, state) => const SplashPage(),
       ),
       GoRoute(
-        path: AppConstants.routeLogin,
+        path: AppConstants.routes.login,
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: AppConstants.routeRegister,
+        path: AppConstants.routes.register,
         builder: (context, state) => const RegisterPage(),
       ),
       GoRoute(
-        path: AppConstants.routeForgotPassword,
+        path: AppConstants.routes.forgotPassword,
         builder: (context, state) => const ForgotPasswordPage(),
       ),
       GoRoute(
-        path: AppConstants.routeHome,
+        path: AppConstants.routes.home,
         builder: (context, state) => const HomePage(),
       ),
       GoRoute(
-        path: AppConstants.routeDashboard,
+        path: AppConstants.routes.dashboard,
         builder: (context, state) => const DashboardPage(),
       ),
       GoRoute(
-        path: AppConstants.routeCustomers,
+        path: AppConstants.routes.customers,
         builder: (context, state) => const CustomersPage(),
       ),
       GoRoute(
-        path: '${AppConstants.routeCustomers}/:id',
+        path: AppConstants.routes.customerDetail,
         builder: (context, state) => CustomerDetailPage(
           customerId: state.pathParameters['id']!,
         ),
       ),
       GoRoute(
-        path: AppConstants.routeTransactions,
+        path: AppConstants.routes.transactions,
         builder: (context, state) => const TransactionsPage(),
       ),
       GoRoute(
-        path: AppConstants.routeReports,
+        path: AppConstants.routes.reports,
         builder: (context, state) => const ReportsPage(),
       ),
       GoRoute(
-        path: AppConstants.routeSettings,
+        path: AppConstants.routes.settings,
         builder: (context, state) => const SettingsPage(),
       ),
       GoRoute(
-        path: AppConstants.routeProfile,
+        path: AppConstants.routes.profile,
         builder: (context, state) => const ProfilePage(),
       ),
       GoRoute(

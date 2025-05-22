@@ -37,7 +37,6 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return AppBar(
       title: Text(title ?? ""),
       actions: actions ??
@@ -45,7 +44,7 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
             IconButton(
               icon: const Icon(Icons.brightness_6),
               onPressed: () {
-                ThemeInheritedWidget.of(context).themeManager.toggleTheme();
+                themeManager.toggleTheme();
               },
             ),
           ],
