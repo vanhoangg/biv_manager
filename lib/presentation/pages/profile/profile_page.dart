@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:biv_manager/core/constants/app_constants.dart';
-import 'package:biv_manager/presentation/widgets/base_page.dart';
+
+import '../../../shared/index.dart';
 
 /// Profile page that shows user information
 class ProfilePage extends BasePage {
@@ -12,18 +12,28 @@ class ProfilePage extends BasePage {
   String get pageTitle => 'Profile';
 
   @override
-  Widget buildContent(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('Profile Page'),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () => context.go(AppConstants.routeLogin),
-            child: const Text('Logout'),
-          ),
-        ],
+  State<StatefulWidget> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends BaseState<ProfilePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: widget.pageTitle,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Profile Page'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => context.go(AppConstants.routeLogin),
+              child: const Text('Logout'),
+            ),
+          ],
+        ),
       ),
     );
   }

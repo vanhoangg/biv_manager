@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:biv_manager/core/constants/app_constants.dart';
-import 'package:biv_manager/core/constants/string_constants.dart';
-import 'package:biv_manager/presentation/blocs/auth/auth_bloc.dart';
-import 'package:biv_manager/presentation/blocs/auth/auth_event.dart';
-import 'package:biv_manager/presentation/blocs/auth/auth_state.dart';
-import 'package:biv_manager/presentation/widgets/custom_app_bar.dart';
-import 'package:biv_manager/presentation/widgets/custom_text_field.dart';
+import '../../../shared/index.dart';
+
+import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/auth/auth_event.dart';
+import '../../blocs/auth/auth_state.dart';
 
 /// Login page
-class LoginPage extends StatefulWidget {
+class LoginPage extends BaseStatefulWidget {
   /// Constructor
   const LoginPage({super.key});
 
@@ -18,7 +16,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends BaseState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -33,20 +31,25 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(StringConstants.login),
+      appBar: const CustomAppBar(
+        title: StringConstants.login,
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthSuccess) {
-            context.go(AppConstants.routeHome);
-          } else if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+          switch (state) {
+            case AuthSuccess():
+              print("Success");
+              context.go(AppConstants.routeHome);
+            case AuthError():
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
           }
         },
         builder: (context, state) {
+          if (state is AuthLoading) {
+            return const CustomLoading();
+          }
           return Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
@@ -92,9 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                             }
                           },
-                    child: state is AuthLoading
-                        ? const CircularProgressIndicator()
-                        : const Text(StringConstants.login),
+                    child: const Text(StringConstants.login),
                   ),
                   TextButton(
                     onPressed: () {

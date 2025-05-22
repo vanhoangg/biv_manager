@@ -1,17 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../theme/theme_manager.dart';
-import '../services/localization_service.dart';
-import '../services/rtl_service.dart';
-import 'package:biv_manager/presentation/blocs/theme/theme_bloc.dart';
-import 'package:biv_manager/presentation/blocs/auth/auth_bloc.dart';
-import 'package:biv_manager/domain/repositories/auth_repository.dart';
-import 'package:biv_manager/data/repositories/auth_repository_impl.dart';
-import 'package:biv_manager/domain/usecases/auth/sign_in_usecase.dart';
-import 'package:biv_manager/domain/usecases/auth/sign_up_usecase.dart';
-import 'package:biv_manager/domain/usecases/auth/reset_password_usecase.dart';
+
+import '../../data/datasources/settings/settings_local_data_source.dart';
+import '../../data/datasources/settings/settings_remote_data_source.dart';
+import '../../data/repositories/auth_repository_impl.dart';
+import '../../data/repositories/settings_repository_impl.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../../domain/repositories/settings_repository.dart';
+import '../../domain/usecases/auth/reset_password_usecase.dart';
+import '../../domain/usecases/auth/sign_in_usecase.dart';
+import '../../domain/usecases/auth/sign_up_usecase.dart';
+import '../../domain/usecases/settings/get_settings_usecase.dart';
+import '../../domain/usecases/settings/update_settings_usecase.dart';
+import '../../presentation/blocs/auth/auth_bloc.dart';
+import '../../presentation/blocs/settings/settings_bloc.dart';
+import '../../shared/index.dart';
 
 /// Service locator instance
 final GetIt sl = GetIt.instance;
@@ -20,7 +26,15 @@ final GetIt sl = GetIt.instance;
 Future<void> init() async {
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
+  final remoteConfig = FirebaseRemoteConfig.instance;
   sl.registerLazySingleton(() => sharedPreferences);
+  sl.registerLazySingleton(() => remoteConfig);
+
+  // App constants
+  sl.registerLazySingleton(() => AppConstants());
+
+  // String constants
+  sl.registerLazySingleton(() => StringConstants());
 
   // Firebase services
   sl.registerLazySingleton(() => FirebaseAuth.instance);
@@ -35,23 +49,44 @@ Future<void> init() async {
   // RTL
   sl.registerLazySingleton(() => RTLService(sl()));
 
+  // Data sources
+  sl.registerLazySingleton<SettingsLocalDataSource>(
+    () => SettingsLocalDataSource(sl()),
+  );
+  sl.registerLazySingleton<SettingsRemoteDataSource>(
+    () => SettingsRemoteDataSource(sl()),
+  );
+
   // Repositories
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton<SettingsRepository>(
+    () => SettingsRepositoryImpl(
+      localDataSource: sl(),
+      remoteDataSource: sl(),
+    ),
   );
 
   // Use cases
   sl.registerLazySingleton(() => SignInUseCase(sl()));
   sl.registerLazySingleton(() => SignUpUseCase(sl()));
   sl.registerLazySingleton(() => ResetPasswordUseCase(sl()));
+  sl.registerLazySingleton(() => GetSettingsUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateSettingsUseCase(sl()));
 
   // Blocs
-  sl.registerFactory(() => ThemeBloc(sl()));
   sl.registerFactory(
     () => AuthBloc(
       signInUseCase: sl(),
       signUpUseCase: sl(),
       resetPasswordUseCase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => SettingsBloc(
+      getSettingsUseCase: sl(),
+      updateSettingsUseCase: sl(),
     ),
   );
 }

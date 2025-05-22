@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../shared/index.dart';
 
 /// A custom app bar widget with modern design.
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   final String? title;
   final List<Widget>? actions;
   final Widget? leading;
@@ -12,6 +13,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? titleSpacing;
   final double? toolbarHeight;
   final PreferredSizeWidget? bottomWidget;
+  final double? scrolledUnderElevation;
+  final Color? surfaceTintColor;
+  final Widget? flexibleSpace;
 
   const CustomAppBar({
     super.key,
@@ -25,6 +29,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.titleSpacing,
     this.toolbarHeight,
     this.bottomWidget,
+    this.scrolledUnderElevation,
+    this.surfaceTintColor,
+    this.flexibleSpace,
   });
 
   @override
@@ -32,8 +39,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final theme = Theme.of(context);
 
     return AppBar(
-      title: title != null ? Text(title!) : null,
-      actions: actions,
+      title: Text(title ?? ""),
+      actions: actions ??
+          [
+            IconButton(
+              icon: const Icon(Icons.brightness_6),
+              onPressed: () {
+                ThemeInheritedWidget.of(context).themeManager.toggleTheme();
+              },
+            ),
+          ],
       leading: leading,
       centerTitle: centerTitle,
       elevation: elevation,
@@ -41,8 +56,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: titleSpacing,
       toolbarHeight: toolbarHeight,
       bottom: bottomWidget,
-      scrolledUnderElevation: 0,
-      surfaceTintColor: Colors.transparent,
+      scrolledUnderElevation: scrolledUnderElevation,
+      surfaceTintColor: surfaceTintColor,
+      flexibleSpace: flexibleSpace,
     );
   }
 

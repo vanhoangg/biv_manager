@@ -1,4 +1,4 @@
-import 'package:biv_manager/domain/repositories/auth_repository.dart';
+import '../../repositories/auth_repository.dart';
 
 /// Reset password use case
 class ResetPasswordUseCase {

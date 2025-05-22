@@ -42,10 +42,10 @@ jobs:
       - name: Build Debug APK
         run: |
           flutter build apk --debug \
-            --dart-define=API_KEY=${{ secrets.DEV_API_KEY }} \
-            --dart-define=BASE_URL=${{ secrets.DEV_BASE_URL }} \
-            --dart-define=BACKDOOR_EMAIL=${{ secrets.DEV_BACKDOOR_EMAIL }} \
-            --dart-define=BACKDOOR_PASSWORD=${{ secrets.DEV_BACKDOOR_PASSWORD }}
+            --dart-define=API_KEY=${{ secrets.API_KEY }} \
+            --dart-define=BASE_URL=${{ secrets.BASE_URL }} \
+            --dart-define=BACKDOOR_EMAIL=${{ secrets.BACKDOOR_EMAIL }} \
+            --dart-define=BACKDOOR_PASSWORD=${{ secrets.BACKDOOR_PASSWORD }}
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v3

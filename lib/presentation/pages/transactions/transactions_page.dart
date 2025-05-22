@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:biv_manager/core/constants/app_constants.dart';
-import 'package:biv_manager/presentation/widgets/base_page.dart';
-import 'package:biv_manager/presentation/widgets/custom_app_bar.dart';
+import '../../../shared/index.dart';
 
 /// Transactions page that shows list of transactions
 class TransactionsPage extends BasePage {
@@ -13,9 +11,16 @@ class TransactionsPage extends BasePage {
   String get pageTitle => 'Transactions';
 
   @override
+  State<StatefulWidget> createState() => _TransactionsPageState();
+}
+
+class _TransactionsPageState extends BaseState<TransactionsPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Transactions'),
+      appBar: CustomAppBar(
+        title: widget.pageTitle,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

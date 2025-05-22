@@ -90,5 +90,17 @@
   "failedToLoadTransactionDetails": "Failed to load transaction details",
   "@failedToLoadTransactionDetails": {
     "description": "Error message when transaction details fail to load"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button text"
+  },
+  "details": "Details",
+  "@details": {
+    "description": "Details section title"
+  },
+  "category": "Category",
+  "@category": {
+    "description": "Category label"
   }
 }

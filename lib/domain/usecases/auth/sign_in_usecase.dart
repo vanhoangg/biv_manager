@@ -1,5 +1,5 @@
-import 'package:biv_manager/domain/entities/auth_user.dart';
-import 'package:biv_manager/domain/repositories/auth_repository.dart';
+import '../../entities/auth_user_entity.dart';
+import '../../repositories/auth_repository.dart';
 
 /// Sign in use case
 class SignInUseCase {
@@ -10,7 +10,7 @@ class SignInUseCase {
   SignInUseCase(this._repository);
 
   /// Execute sign in
-  Future<AuthUser> execute({
+  Future<AuthUserEntity> execute({
     required String email,
     required String password,
   }) {

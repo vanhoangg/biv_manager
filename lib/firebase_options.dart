@@ -83,4 +83,5 @@ class DefaultFirebaseOptions {
     authDomain: 'biv-manager.firebaseapp.com',
     storageBucket: 'biv-manager.firebasestorage.app',
   );
+
 }

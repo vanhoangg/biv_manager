@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:biv_manager/core/constants/app_constants.dart';
-import 'package:biv_manager/core/constants/string_constants.dart';
-import 'package:biv_manager/presentation/blocs/auth/auth_bloc.dart';
-import 'package:biv_manager/presentation/blocs/auth/auth_event.dart';
-import 'package:biv_manager/presentation/blocs/auth/auth_state.dart';
-import 'package:biv_manager/presentation/widgets/custom_app_bar.dart';
-import 'package:biv_manager/presentation/widgets/custom_text_field.dart';
-import 'package:biv_manager/presentation/widgets/custom_button.dart';
+
+import '../../../shared/index.dart';
+import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/auth/auth_event.dart';
+import '../../blocs/auth/auth_state.dart';
 
 /// Register page
-class RegisterPage extends StatefulWidget {
+class RegisterPage extends BaseStatefulWidget {
   /// Constructor
   const RegisterPage({super.key});
 
@@ -19,11 +16,19 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageState extends BaseState<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+  }
 
   @override
   void dispose() {
@@ -39,12 +44,15 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: const CustomAppBar(title: StringConstants.register),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthSuccess) {
-            context.go(AppConstants.routeHome);
-          } else if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+          switch (state) {
+            case AuthSuccess():
+              context.go(AppConstants.routeHome);
+              return;
+            case AuthError():
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
+              return;
           }
         },
         builder: (context, state) {

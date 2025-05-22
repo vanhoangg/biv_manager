@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:biv_manager/presentation/widgets/base_page.dart';
+
+import '../../../shared/index.dart';
 
 /// Reports page that shows various reports and analytics
 class ReportsPage extends BasePage {
@@ -10,9 +11,19 @@ class ReportsPage extends BasePage {
   String get pageTitle => 'Reports';
 
   @override
-  Widget buildContent(BuildContext context) {
-    return const Center(
-      child: Text('Reports Page'),
+  State<StatefulWidget> createState() => _ReportPageState();
+}
+
+class _ReportPageState extends BaseState<ReportsPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: widget.pageTitle,
+      ),
+      body: const Center(
+        child: Text('Reports Page'),
+      ),
     );
   }
 }

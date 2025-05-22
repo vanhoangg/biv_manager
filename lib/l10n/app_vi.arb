@@ -21,5 +21,8 @@
   "date": "Ngày",
   "status": "Trạng thái",
   "description": "Mô tả",
-  "failedToLoadTransactionDetails": "Không thể tải chi tiết giao dịch"
+  "failedToLoadTransactionDetails": "Không thể tải chi tiết giao dịch",
+  "retry": "Thử lại",
+  "details": "Chi tiết",
+  "category": "Danh mục"
 }

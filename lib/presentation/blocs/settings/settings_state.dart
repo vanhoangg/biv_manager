@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
+import '../../../domain/entities/settings_entity.dart';
 
-/// Settings state
+/// Base class for settings states
 abstract class SettingsState extends Equatable {
   /// Constructor
   const SettingsState();
@@ -9,13 +10,31 @@ abstract class SettingsState extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Settings loading state
+/// Initial settings state
+class SettingsInitial extends SettingsState {
+  /// Constructor
+  const SettingsInitial();
+}
+
+/// Loading settings state
 class SettingsLoading extends SettingsState {
   /// Constructor
   const SettingsLoading();
 }
 
-/// Settings error state
+/// Loaded settings state
+class SettingsLoaded extends SettingsState {
+  /// Settings data
+  final SettingsEntity settings;
+
+  /// Constructor
+  const SettingsLoaded(this.settings);
+
+  @override
+  List<Object?> get props => [settings];
+}
+
+/// Error settings state
 class SettingsError extends SettingsState {
   /// Error message
   final String message;
@@ -25,10 +44,4 @@ class SettingsError extends SettingsState {
 
   @override
   List<Object?> get props => [message];
-}
-
-/// Settings loaded state
-class SettingsLoaded extends SettingsState {
-  /// Constructor
-  const SettingsLoaded();
 }

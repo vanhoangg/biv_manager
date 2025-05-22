@@ -1,27 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:biv_manager/presentation/blocs/settings/settings_state.dart';
-
-/// Settings events
-abstract class SettingsEvent extends Equatable {
-  /// Constructor
-  const SettingsEvent();
-
-  @override
-  List<Object?> get props => [];
-}
-
-/// Load settings event
-class LoadSettings extends SettingsEvent {
-  /// Constructor
-  const LoadSettings();
-}
+import '../../../domain/usecases/settings/get_settings_usecase.dart';
+import '../../../domain/usecases/settings/update_settings_usecase.dart';
+import 'settings_event.dart';
+import 'settings_state.dart';
 
 /// Settings bloc
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
+  final GetSettingsUseCase _getSettingsUseCase;
+  final UpdateSettingsUseCase _updateSettingsUseCase;
+
   /// Constructor
-  SettingsBloc() : super(const SettingsLoading()) {
+  SettingsBloc({
+    required GetSettingsUseCase getSettingsUseCase,
+    required UpdateSettingsUseCase updateSettingsUseCase,
+  })  : _getSettingsUseCase = getSettingsUseCase,
+        _updateSettingsUseCase = updateSettingsUseCase,
+        super(const SettingsInitial()) {
     on<LoadSettings>(_onLoadSettings);
+    on<UpdateSettings>(_onUpdateSettings);
+    on<ToggleDarkMode>(_onToggleDarkMode);
+    on<UpdateLanguage>(_onUpdateLanguage);
   }
 
   Future<void> _onLoadSettings(
@@ -30,8 +28,62 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async {
     try {
       emit(const SettingsLoading());
-      // TODO: Load settings from storage
-      emit(const SettingsLoaded());
+      final result = await _getSettingsUseCase();
+      result.fold(
+        (error) => emit(SettingsError(error.toString())),
+        (settings) => emit(SettingsLoaded(settings)),
+      );
+    } catch (e) {
+      emit(SettingsError(e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateSettings(
+    UpdateSettings event,
+    Emitter<SettingsState> emit,
+  ) async {
+    try {
+      emit(const SettingsLoading());
+      final result = await _updateSettingsUseCase(event.settings);
+      result.fold(
+        (error) => emit(SettingsError(error.toString())),
+        (settings) => emit(SettingsLoaded(settings)),
+      );
+    } catch (e) {
+      emit(SettingsError(e.toString()));
+    }
+  }
+
+  Future<void> _onToggleDarkMode(
+    ToggleDarkMode event,
+    Emitter<SettingsState> emit,
+  ) async {
+    try {
+      final currentState = state;
+      if (currentState is SettingsLoaded) {
+        final updatedSettings = currentState.settings.copyWith(
+          isDarkMode: !currentState.settings.isDarkMode,
+        );
+        add(UpdateSettings(updatedSettings));
+      }
+    } catch (e) {
+      emit(SettingsError(e.toString()));
+    }
+  }
+
+  Future<void> _onUpdateLanguage(
+    UpdateLanguage event,
+    Emitter<SettingsState> emit,
+  ) async {
+    try {
+      final currentState = state;
+      if (currentState is SettingsLoaded) {
+        final updatedSettings = currentState.settings.copyWith(
+          languageCode: event.languageCode,
+          countryCode: event.countryCode,
+        );
+        add(UpdateSettings(updatedSettings));
+      }
     } catch (e) {
       emit(SettingsError(e.toString()));
     }

@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:biv_manager/domain/usecases/auth/sign_in_usecase.dart';
-import 'package:biv_manager/domain/usecases/auth/sign_up_usecase.dart';
-import 'package:biv_manager/domain/usecases/auth/reset_password_usecase.dart';
+
+import '../../../domain/usecases/auth/reset_password_usecase.dart';
+import '../../../domain/usecases/auth/sign_in_usecase.dart';
+import '../../../domain/usecases/auth/sign_up_usecase.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 

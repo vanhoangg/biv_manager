@@ -1,27 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-
-/// Events for locale management
-abstract class LocaleEvent extends Equatable {
-  /// Constructor
-  const LocaleEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
-/// Event to change locale
-class LocaleChanged extends LocaleEvent {
-  /// New locale
-  final Locale locale;
-
-  /// Constructor
-  const LocaleChanged(this.locale);
-
-  @override
-  List<Object> get props => [locale];
-}
+import 'locale_event.dart';
 
 /// State for locale management
 class LocaleState extends Equatable {

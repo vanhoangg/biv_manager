@@ -1,6 +1,6 @@
-import 'package:biv_manager/core/config/firebase_config.dart';
 // import 'package:flutter/foundation.dart';
-import 'package:biv_manager/core/config/env_variables.dart';
+
+import '../../shared/index.dart';
 
 /// Environment configuration for the app
 class EnvConfig {

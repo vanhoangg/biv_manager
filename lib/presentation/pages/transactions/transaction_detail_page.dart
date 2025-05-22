@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:biv_manager/presentation/widgets/base_page.dart';
-import 'package:biv_manager/presentation/widgets/custom_loading.dart';
-import 'package:biv_manager/presentation/widgets/custom_error.dart';
-import 'package:biv_manager/core/utils/locale_formatter.dart';
-import 'package:biv_manager/presentation/blocs/transaction_detail/transaction_detail_bloc.dart';
-import 'package:biv_manager/presentation/blocs/transaction_detail/transaction_detail_state.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../../shared/index.dart';
+import '../../../domain/entities/transaction_entity.dart';
+import '../../blocs/transaction_detail/transaction_detail_bloc.dart';
+import '../../blocs/transaction_detail/transaction_detail_state.dart';
 
 /// Transaction detail page that shows transaction information
 class TransactionDetailPage extends BasePage {
@@ -20,76 +18,215 @@ class TransactionDetailPage extends BasePage {
   });
 
   @override
-  String get pageTitle => l10n?.transactionDetails ?? 'Transaction Details';
+  String get pageTitle => 'Transaction Details';
 
   @override
-  Widget buildContent(BuildContext context) {
-    if (l10n == null) return const SizedBox.shrink();
+  State<StatefulWidget> createState() => _TransactionDetailPageState();
+}
 
-    return BlocBuilder<TransactionDetailBloc, TransactionDetailState>(
-      builder: (context, state) {
-        if (state is TransactionDetailLoading) {
-          return CustomLoading(message: l10n!.loadingTransactionDetails);
-        }
+class _TransactionDetailPageState extends BaseState<TransactionDetailPage> {
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: widget.pageTitle,
+      ),
+      body: BlocBuilder<TransactionDetailBloc, TransactionDetailState>(
+        builder: (context, state) {
+          if (state is TransactionDetailLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-        if (state is TransactionDetailError) {
-          return CustomError(
-            message: state.message,
-            onRetry: () {
-              context.read<TransactionDetailBloc>().add(
-                    LoadTransactionDetail(transactionId: transactionId),
-                  );
-            },
-          );
-        }
-
-        if (state is TransactionDetailLoaded) {
-          final transaction = state.transaction;
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  transaction.title,
-                  style: theme.textTheme.headlineMedium,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  '${l10n!.amount}: ${LocaleFormatter.formatCurrency(context, transaction.amount)}',
-                  style: theme.textTheme.titleLarge,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${l10n!.date}: ${LocaleFormatter.formatDateTime(context, transaction.date)}',
-                  style: theme.textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${l10n!.status}: ${transaction.status}',
-                  style: theme.textTheme.bodyLarge,
-                ),
-                if (transaction.description != null) ...[
-                  const SizedBox(height: 16),
+          if (state is TransactionDetailError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   Text(
-                    l10n!.description,
-                    style: theme.textTheme.titleMedium,
+                    state.message,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                    textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    transaction.description!,
-                    style: theme.textTheme.bodyMedium,
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<TransactionDetailBloc>().add(
+                            LoadTransactionDetail(
+                              transactionId: widget.transactionId,
+                            ),
+                          );
+                    },
+                    child: Text(l10n?.retry ?? 'Retry'),
                   ),
                 ],
-              ],
-            ),
-          );
-        }
+              ),
+            );
+          }
 
-        return CustomError(
-          message: l10n!.failedToLoadTransactionDetails,
-        );
-      },
+          if (state is TransactionDetailLoaded) {
+            return _buildTransactionDetails(context, state.transaction);
+          }
+
+          return const SizedBox.shrink();
+        },
+      ),
+    );
+  }
+
+  Widget _buildTransactionDetails(
+      BuildContext context, TransactionEntity transaction) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildAmountSection(context, transaction),
+          const SizedBox(height: 24),
+          _buildDetailsSection(context, transaction),
+          if (transaction.description != null) ...[
+            const SizedBox(height: 24),
+            _buildDescriptionSection(context, transaction),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAmountSection(
+      BuildContext context, TransactionEntity transaction) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.shadow.withAlpha(26),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Text(
+            LocaleFormatter.formatCurrency(context, transaction.amount),
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            transaction.type.toUpperCase(),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailsSection(
+      BuildContext context, TransactionEntity transaction) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.shadow.withAlpha(26),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            AppLocalizations.of(context)?.details ?? 'Details',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 16),
+          _buildDetailRow(
+            context,
+            AppLocalizations.of(context)?.date ?? 'Date',
+            LocaleFormatter.formatDateTime(context, transaction.date),
+          ),
+          const SizedBox(height: 12),
+          _buildDetailRow(
+            context,
+            AppLocalizations.of(context)?.status ?? 'Status',
+            transaction.status.toUpperCase(),
+          ),
+          const SizedBox(height: 12),
+          _buildDetailRow(
+            context,
+            AppLocalizations.of(context)?.category ?? 'Category',
+            transaction.category,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDescriptionSection(
+      BuildContext context, TransactionEntity transaction) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).colorScheme.shadow.withAlpha(26),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            AppLocalizations.of(context)?.description ?? 'Description',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            transaction.description!,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(BuildContext context, String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withAlpha(153),
+              ),
+        ),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+        ),
+      ],
     );
   }
 }

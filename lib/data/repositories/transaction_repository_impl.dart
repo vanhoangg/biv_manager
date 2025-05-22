@@ -1,11 +1,8 @@
-import 'package:biv_manager/domain/entities/transaction.dart';
-import 'package:biv_manager/domain/repositories/transaction_repository.dart';
-import 'package:biv_manager/core/error/exceptions.dart';
-import 'package:biv_manager/core/error/failures.dart';
-import 'package:biv_manager/core/network/network_info.dart';
-import 'package:biv_manager/data/datasources/transaction_remote_data_source.dart';
-import 'package:biv_manager/data/datasources/transaction_local_data_source.dart';
-import 'package:dartz/dartz.dart';
+import '../../domain/entities/transaction_entity.dart';
+import '../../domain/repositories/transaction_repository.dart';
+import '../../shared/index.dart';
+import '../datasources/transaction/transaction_local_data_source.dart';
+import '../datasources/transaction/transaction_remote_data_source.dart';
 
 /// Transaction repository implementation
 class TransactionRepositoryImpl implements TransactionRepository {
@@ -26,7 +23,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
   });
 
   @override
-  Future<List<Transaction>> getTransactions() async {
+  Future<List<TransactionEntity>> getTransactions() async {
     if (await networkInfo.isConnected) {
       try {
         final remoteTransactions = await remoteDataSource.getTransactions();
@@ -41,7 +38,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<Transaction> getTransaction(String id) async {
+  Future<TransactionEntity> getTransaction(String id) async {
     if (await networkInfo.isConnected) {
       try {
         final remoteTransaction = await remoteDataSource.getTransaction(id);
@@ -56,7 +53,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<Transaction> createTransaction(Transaction transaction) async {
+  Future<TransactionEntity> createTransaction(
+      TransactionEntity transaction) async {
     if (await networkInfo.isConnected) {
       try {
         final remoteTransaction =
@@ -67,12 +65,13 @@ class TransactionRepositoryImpl implements TransactionRepository {
         throw ServerFailure(e.message);
       }
     } else {
-      throw NetworkFailure();
+      throw const NetworkFailure();
     }
   }
 
   @override
-  Future<Transaction> updateTransaction(Transaction transaction) async {
+  Future<TransactionEntity> updateTransaction(
+      TransactionEntity transaction) async {
     if (await networkInfo.isConnected) {
       try {
         final remoteTransaction =
@@ -83,7 +82,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
         throw ServerFailure(e.message);
       }
     } else {
-      throw NetworkFailure();
+      throw const NetworkFailure();
     }
   }
 
@@ -97,7 +96,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
         throw ServerFailure(e.message);
       }
     } else {
-      throw NetworkFailure();
+      throw const NetworkFailure();
     }
   }
 }

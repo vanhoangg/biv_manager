@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:biv_manager/core/config/app_config.dart';
+
+import '../../../shared/index.dart';
 
 /// Splash page that shows when the app is loading
-class SplashPage extends StatelessWidget {
+class SplashPage extends BaseStatelessWidget {
   /// Creates a new instance of [SplashPage]
   const SplashPage({super.key});
 

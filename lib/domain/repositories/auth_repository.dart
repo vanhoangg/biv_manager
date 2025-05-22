@@ -1,15 +1,15 @@
-import 'package:biv_manager/domain/entities/auth_user.dart';
+import '../entities/auth_user_entity.dart';
 
 /// Auth repository interface
 abstract class AuthRepository {
   /// Sign in with email and password
-  Future<AuthUser> signInWithEmailAndPassword({
+  Future<AuthUserEntity> signInWithEmailAndPassword({
     required String email,
     required String password,
   });
 
   /// Create user with email and password
-  Future<AuthUser> createUserWithEmailAndPassword({
+  Future<AuthUserEntity> createUserWithEmailAndPassword({
     required String email,
     required String password,
   });

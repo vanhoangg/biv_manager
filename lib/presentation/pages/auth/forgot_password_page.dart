@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:biv_manager/core/constants/app_constants.dart';
-import 'package:biv_manager/core/constants/string_constants.dart';
-import 'package:biv_manager/presentation/blocs/auth/auth_bloc.dart';
-import 'package:biv_manager/presentation/blocs/auth/auth_event.dart';
-import 'package:biv_manager/presentation/blocs/auth/auth_state.dart';
-import 'package:biv_manager/presentation/widgets/custom_app_bar.dart';
-import 'package:biv_manager/presentation/widgets/custom_text_field.dart';
-import 'package:biv_manager/presentation/widgets/custom_button.dart';
+
+import '../../../shared/index.dart';
+import '../../blocs/auth/auth_bloc.dart';
+import '../../blocs/auth/auth_event.dart';
+import '../../blocs/auth/auth_state.dart';
 
 /// Forgot password page
-class ForgotPasswordPage extends StatefulWidget {
+class ForgotPasswordPage extends BaseStatefulWidget {
   /// Constructor
   const ForgotPasswordPage({super.key});
 
@@ -19,7 +16,7 @@ class ForgotPasswordPage extends StatefulWidget {
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _ForgotPasswordPageState extends BaseState<ForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
 

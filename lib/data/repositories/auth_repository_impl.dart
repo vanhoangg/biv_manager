@@ -1,6 +1,12 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:biv_manager/domain/entities/auth_user.dart';
-import 'package:biv_manager/domain/repositories/auth_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../core/di/injection_container.dart';
+import '../../domain/entities/auth_user_entity.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../../shared/index.dart';
+import '../mappers/auth_user_mapper.dart';
 
 /// Auth repository implementation
 class AuthRepositoryImpl implements AuthRepository {
@@ -10,45 +16,53 @@ class AuthRepositoryImpl implements AuthRepository {
   /// Constructor
   AuthRepositoryImpl(this._auth);
 
+  void _validateUserCredential(UserCredential userCredential) async {
+    if (userCredential.user == null) {
+      throw Exception('User is null after sign in');
+    }
+    if (userCredential.user?.uid == null) {
+      throw Exception('User ID is null after sign in');
+    }
+    // Save token in shared preferences
+    sl<SharedPreferences>()
+        .setString(AppConstants.storageToken, userCredential.user?.uid ?? '');
+  }
+
   @override
-  Future<AuthUser> signInWithEmailAndPassword({
+  Future<AuthUserEntity> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
     try {
       // MARK: Backdoor for testing
-      if (email == 'test@biv.com' && password == 'test123') {
-        return AuthUser(
-          id: 'test-user-id',
+      if (email == '1' && password == '1') {
+        final mockUser = AuthUserEntity(
+          id: Random().nextInt(1000000).toString(),
           email: email,
           displayName: 'Test User',
           photoUrl: null,
+          accessToken: 'test-access-token',
         );
+        sl<SharedPreferences>()
+            .setString(AppConstants.storageToken, mockUser.accessToken ?? '');
+        return mockUser;
       }
 
       final userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      print(userCredential);
+      _validateUserCredential(userCredential);
 
-      final user = userCredential.user;
-      if (user == null) {
-        throw Exception('User is null after sign in');
-      }
-
-      return AuthUser(
-        id: user.uid,
-        email: user.email!,
-        displayName: user.displayName,
-        photoUrl: user.photoURL,
-      );
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.message ?? 'Authentication failed');
+      return AuthUserMapper.fromUserCredential(userCredential);
+    } on Exception catch (e) {
+      throw Exception(e.toString());
     }
   }
 
   @override
-  Future<AuthUser> createUserWithEmailAndPassword({
+  Future<AuthUserEntity> createUserWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -57,18 +71,9 @@ class AuthRepositoryImpl implements AuthRepository {
         email: email,
         password: password,
       );
+      _validateUserCredential(userCredential);
 
-      final user = userCredential.user;
-      if (user == null) {
-        throw Exception('User is null after creation');
-      }
-
-      return AuthUser(
-        id: user.uid,
-        email: user.email!,
-        displayName: user.displayName,
-        photoUrl: user.photoURL,
-      );
+      return AuthUserMapper.fromUserCredential(userCredential);
     } on FirebaseAuthException catch (e) {
       throw Exception(e.message ?? 'User creation failed');
     }

@@ -1,0 +1,221 @@
+# AI Agent Global Rules & Guidelines
+
+## 1. Communication Protocol
+- Start every response with "Hi Biv"
+- Maintain professional and clear communication
+- Show only changed code sections without repeating unchanged parts
+- Summarize completed and pending tasks at the end of each response
+- If prompt is unclear or poorly written, improve it first before responding
+- Use markdown formatting for better readability
+- Keep responses concise but comprehensive
+
+## 2. Code Quality Standards
+### Documentation
+- Use /// doc comments for public functions and APIs
+- Add file header comments (file name, author, purpose)
+- Add parameter and return descriptions in doc comments
+- Comment architectural decisions
+- Mention performance implications
+- Note expected thread execution
+- Flag security-sensitive operations
+- Explain use of external dependencies
+- Cross-reference related files or logic
+- Leave notes for legacy code or deprecation
+- Describe failure-prone areas and fallback logic
+- Suggest clear refactoring opportunities
+
+### Code Clarity
+- Use meaningful variable and function names
+- Add comments only where code isn't obvious
+- Avoid "magic numbers"; use named constants/enums
+- Write clear, self-documenting code
+- Follow SOLID principles
+- Keep functions small and focused
+- Use meaningful error messages
+
+## 3. Platform-Specific Guidelines
+### Swift
+- Prefer protocol-oriented programming
+- Use guard for early exits
+- Follow Swift style guide
+- Use SwiftLint for code formatting
+- Implement proper memory management
+
+### Flutter/Dart
+- Use const widgets where possible
+- Manage state cleanly (Provider, Bloc)
+- Default to Dart unless otherwise specified
+- Follow Dart style guide
+- Use dart format for code formatting
+- Implement proper widget lifecycle management
+
+### UI Development
+- Write UI declaratively
+- Avoid complex layout logic
+- Follow platform-specific design guidelines
+- Implement responsive design
+- Use platform-specific widgets appropriately
+
+## 4. Performance Optimization
+### Concurrency
+- Perform network and heavy tasks off the main thread:
+  - async/await
+  - DispatchQueue
+  - Isolates
+- Use debouncing/throttling for user input
+- Implement proper thread management
+
+### Memory Management
+- Avoid memory leaks by managing references carefully:
+  - weak/unowned
+  - Avoid strong references to self
+- Implement proper resource cleanup
+- Use appropriate caching strategies
+
+### Network & Data
+- Cache data to reduce network calls
+- Implement proper error handling for network requests
+- Use appropriate data structures
+- Optimize data loading and storage
+
+## 5. Error Handling
+- Use Result types or throws to propagate errors cleanly
+- Show user-friendly error messages
+- Allow retry where appropriate
+- Handle errors gracefully
+- Implement proper error state management
+- Log errors appropriately
+- Provide meaningful error recovery options
+
+## 6. Code Style & Formatting
+- Use SwiftLint/Dart formatters
+- Adhere to team style guides
+- Automate formatting in pre-commit hooks
+- Run `flutter analyze` before committing
+- Run `dart format .` to format code
+- Follow consistent naming conventions
+- Use proper indentation and spacing
+
+## 7. Project Structure
+### File Organization
+- Generate files in correct locations
+- Separate mock data from source code
+- Keep project code clean
+- Remove redundant code
+- Use best solutions and best practices
+
+### Directory Structure
+lib/
+├── core/         # Core functionality
+├── data/         # Data layer
+├── domain/       # Business logic
+├── features/     # Feature modules
+└── presentation/ # UI layer
+
+## 8. Learning & Documentation
+- Regularly update knowledge on new APIs and patterns
+- Write small notes or blog posts to reinforce learning
+- Document progress in a structured way
+- Keep learning notes in a dedicated location
+- Link documentation to relevant code
+- Update documentation when code changes
+- Share knowledge with team members
+
+## 9. Interview Preparation
+- Score answers 1-10
+- Provide detailed corrections
+- Give word-by-word corrections
+- Show improved phrasing clearly
+- Include direct examples
+- Provide alternative solutions
+- Explain reasoning behind answers
+
+## 10. Testing & Quality Assurance
+- Write unit tests for business logic
+- Write widget tests for UI components
+- Run tests with `flutter test`
+- Ensure all tests pass before committing
+- Implement proper test coverage
+- Use appropriate testing frameworks
+- Follow testing best practices
+
+## 11. Security
+- Secure environment variables
+- Proper Firebase configuration
+- Secure API keys
+- Backdoor access only for development
+- Follow security best practices
+- Implement proper authentication
+- Handle sensitive data appropriately
+
+## 12. Localization
+- Support multiple languages
+- Handle text direction (LTR/RTL)
+- Use localized strings
+- Follow platform-specific localization guidelines
+- Implement proper date and number formatting
+- Handle cultural differences appropriately
+
+## 13. Task Management
+- Break down complex tasks into smaller, manageable pieces
+- Prioritize tasks appropriately
+- Track progress and dependencies
+- Update task status regularly
+- Communicate blockers and issues promptly
+
+## 14. Code Review Guidelines
+- Review code for functionality
+- Check for security vulnerabilities
+- Ensure proper error handling
+- Verify performance considerations
+- Check for proper documentation
+- Ensure code follows style guidelines
+- Look for potential improvements
+
+## 15. Version Control
+- Use meaningful commit messages
+- Follow branching strategy
+- Keep commits focused and atomic
+- Review changes before committing
+- Handle merge conflicts appropriately
+- Maintain clean git history
+
+## 16. Continuous Integration
+- Ensure builds pass before merging
+- Run tests automatically
+- Check code style automatically
+- Monitor build performance
+- Handle deployment appropriately
+- Maintain CI/CD pipelines
+
+## 17. Monitoring & Logging
+- Implement proper logging
+- Monitor application performance
+- Track error rates
+- Monitor user behavior
+- Implement crash reporting
+- Use appropriate analytics
+
+## 18. Accessibility
+- Follow accessibility guidelines
+- Implement proper screen reader support
+- Use appropriate contrast ratios
+- Support dynamic text sizes
+- Handle keyboard navigation
+- Test with accessibility tools
+
+## 19. Maintenance
+- Keep dependencies updated
+- Remove deprecated code
+- Maintain documentation
+- Monitor technical debt
+- Plan for scalability
+- Regular code cleanup
+
+## 20. Communication & Collaboration
+- Share knowledge with team
+- Document decisions
+- Maintain clear communication
+- Handle conflicts professionally
+- Support team members
+- Follow team processes 

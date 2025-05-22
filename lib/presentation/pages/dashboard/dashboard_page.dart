@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:biv_manager/presentation/widgets/base_page.dart';
+import '../../../shared/index.dart';
 
 /// Dashboard page that shows overview of the app
 class DashboardPage extends BasePage {
@@ -10,9 +10,19 @@ class DashboardPage extends BasePage {
   String get pageTitle => 'Dashboard';
 
   @override
-  Widget buildContent(BuildContext context) {
-    return const Center(
-      child: Text('Dashboard Page'),
+  State<StatefulWidget> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends BaseState<DashboardPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: widget.pageTitle,
+      ),
+      body: const Center(
+        child: Text('Dashboard Page'),
+      ),
     );
   }
 }
