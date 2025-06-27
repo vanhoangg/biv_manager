@@ -1,102 +1,167 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../core/error/failures.dart';
+import '../../core/result.dart';
 import '../../domain/entities/transaction_entity.dart';
 import '../../domain/repositories/transaction_repository.dart';
-import '../../shared/index.dart';
 import '../datasources/transaction/transaction_local_data_source.dart';
 import '../datasources/transaction/transaction_remote_data_source.dart';
+import '../models/transaction_dto.dart';
 
-/// Transaction repository implementation
+/// Implementation of TransactionRepository using Firebase
 class TransactionRepositoryImpl implements TransactionRepository {
-  /// Remote data source
-  final TransactionRemoteDataSource remoteDataSource;
-
-  /// Local data source
-  final TransactionLocalDataSource localDataSource;
-
-  /// Network info
-  final NetworkInfo networkInfo;
+  final FirebaseFirestore _firestore;
+  final TransactionLocalDataSource _localDataSource;
+  final TransactionRemoteDataSource _remoteDataSource;
 
   /// Constructor
   TransactionRepositoryImpl({
-    required this.remoteDataSource,
-    required this.localDataSource,
-    required this.networkInfo,
-  });
+    required FirebaseFirestore firestore,
+    required TransactionLocalDataSource localDataSource,
+    required TransactionRemoteDataSource remoteDataSource,
+  })  : _firestore = firestore,
+        _localDataSource = localDataSource,
+        _remoteDataSource = remoteDataSource;
 
   @override
-  Future<List<TransactionEntity>> getTransactions() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteTransactions = await remoteDataSource.getTransactions();
-        await localDataSource.cacheTransactions(remoteTransactions);
-        return remoteTransactions;
-      } on ServerException {
-        return localDataSource.getLastTransactions();
-      }
-    } else {
-      return localDataSource.getLastTransactions();
+  Future<Result<List<TransactionEntity>>> getTransactions() async {
+    try {
+      final transactions = await _remoteDataSource.getTransactions();
+      await _localDataSource.cacheTransactions(transactions);
+      return Result.success(transactions);
+    } on ServerFailure catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(UnknownFailure(e.toString()));
     }
   }
 
   @override
-  Future<TransactionEntity> getTransaction(String id) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteTransaction = await remoteDataSource.getTransaction(id);
-        await localDataSource.cacheTransaction(remoteTransaction);
-        return remoteTransaction;
-      } on ServerException {
-        return localDataSource.getLastTransaction(id);
-      }
-    } else {
-      return localDataSource.getLastTransaction(id);
+  Future<Result<TransactionEntity>> getTransactionById(String id) async {
+    try {
+      final transaction = await _remoteDataSource.getTransactionById(id);
+      return Result.success(transaction);
+    } on ServerFailure catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(UnknownFailure(e.toString()));
     }
   }
 
   @override
-  Future<TransactionEntity> createTransaction(
-      TransactionEntity transaction) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteTransaction =
-            await remoteDataSource.createTransaction(transaction);
-        await localDataSource.cacheTransaction(remoteTransaction);
-        return remoteTransaction;
-      } on ServerException catch (e) {
-        throw ServerFailure(e.message);
-      }
-    } else {
-      throw const NetworkFailure();
+  Future<Result<TransactionEntity>> createTransaction(
+    TransactionEntity transaction,
+  ) async {
+    try {
+      final createdTransaction = await _remoteDataSource.createTransaction(
+        TransactionDTO.fromEntity(transaction),
+      );
+      return Result.success(createdTransaction);
+    } on ServerFailure catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(UnknownFailure(e.toString()));
     }
   }
 
   @override
-  Future<TransactionEntity> updateTransaction(
-      TransactionEntity transaction) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteTransaction =
-            await remoteDataSource.updateTransaction(transaction);
-        await localDataSource.cacheTransaction(remoteTransaction);
-        return remoteTransaction;
-      } on ServerException catch (e) {
-        throw ServerFailure(e.message);
-      }
-    } else {
-      throw const NetworkFailure();
+  Future<Result<TransactionEntity>> updateTransaction(
+    TransactionEntity transaction,
+  ) async {
+    try {
+      final updatedTransaction = await _remoteDataSource.updateTransaction(
+        TransactionDTO.fromEntity(transaction),
+      );
+      return Result.success(updatedTransaction);
+    } on ServerFailure catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(UnknownFailure(e.toString()));
     }
   }
 
   @override
-  Future<void> deleteTransaction(String id) async {
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDataSource.deleteTransaction(id);
-        await localDataSource.deleteTransaction(id);
-      } on ServerException catch (e) {
-        throw ServerFailure(e.message);
-      }
-    } else {
-      throw const NetworkFailure();
+  Future<Result<void>> deleteTransaction(String id) async {
+    try {
+      await _remoteDataSource.deleteTransaction(id);
+      return Result.success(null);
+    } on ServerFailure catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(UnknownFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Result<List<TransactionEntity>>> getTransactionsByDateRange(
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+    try {
+      final transactions = await _remoteDataSource.getTransactionsByDateRange(
+        startDate,
+        endDate,
+      );
+      return Result.success(transactions);
+    } on ServerFailure catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(UnknownFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Result<List<TransactionEntity>>> getTransactionsByCustomer(
+    String customerId,
+  ) async {
+    try {
+      final transactions = await _remoteDataSource.getTransactionsByCustomer(
+        customerId,
+      );
+      return Result.success(transactions);
+    } on ServerFailure catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(UnknownFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Result<double>> getTotalAmountByDateRange(
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+    try {
+      final transactions = await _remoteDataSource.getTransactionsByDateRange(
+        startDate,
+        endDate,
+      );
+      final total = transactions.fold<double>(
+        0,
+        (sum, transaction) => sum + transaction.amount,
+      );
+      return Result.success(total);
+    } on ServerFailure catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(UnknownFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Result<double>> getTotalAmountByCustomer(String customerId) async {
+    try {
+      final transactions = await _remoteDataSource.getTransactionsByCustomer(
+        customerId,
+      );
+      final total = transactions.fold<double>(
+        0,
+        (sum, transaction) => sum + transaction.amount,
+      );
+      return Result.success(total);
+    } on ServerFailure catch (e) {
+      return Result.failure(e);
+    } catch (e) {
+      return Result.failure(UnknownFailure(e.toString()));
     }
   }
 }

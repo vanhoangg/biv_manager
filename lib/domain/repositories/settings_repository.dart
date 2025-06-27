@@ -1,11 +1,12 @@
 import '../entities/settings_entity.dart';
+import '../../core/result.dart';
 
 /// Repository interface for managing application settings
 /// Defines the contract for settings operations
 abstract class SettingsRepository {
   /// Get current settings
   /// Returns the current settings or default settings if none exist
-  Future<SettingsEntity> getSettings();
+  Future<Result<SettingsEntity>> getSettings();
 
   /// Save settings
   /// Returns true if successful, false otherwise
@@ -13,7 +14,7 @@ abstract class SettingsRepository {
 
   /// Update specific settings fields
   /// Returns updated settings if successful, null otherwise
-  Future<SettingsEntity?> updateSettings(SettingsEntity settings);
+  Future<Result<void>> updateSettings(SettingsEntity settings);
 
   /// Delete all settings
   /// Returns true if successful, false otherwise

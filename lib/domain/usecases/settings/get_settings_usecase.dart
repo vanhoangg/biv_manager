@@ -1,21 +1,24 @@
-import '../../../../core/result.dart';
+import '../../../core/usecases/usecase.dart';
+import '../../../core/result.dart';
+import '../../../core/error/failures.dart';
 import '../../entities/settings_entity.dart';
 import '../../repositories/settings_repository.dart';
 
 /// Use case for getting application settings
-class GetSettingsUseCase {
+class GetSettingsUseCase implements UseCase<SettingsEntity, NoParams> {
   final SettingsRepository _repository;
 
   /// Constructor
-  GetSettingsUseCase(this._repository);
+  const GetSettingsUseCase(this._repository);
 
   /// Execute the use case
-  Future<Result<SettingsEntity>> call() async {
+  @override
+  Future<Result<SettingsEntity>> call(NoParams params) async {
     try {
-      final settings = await _repository.getSettings();
-      return Result.ok(settings);
+      final result = await _repository.getSettings();
+      return result;
     } catch (e) {
-      return Result.error(Exception(e.toString()));
+      return Result.failure(ServerFailure(e.toString()));
     }
   }
 }

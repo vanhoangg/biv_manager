@@ -16,7 +16,6 @@ export 'services/localization_service.dart';
 // Services
 export 'services/navigation_guard.dart';
 export 'services/rtl_service.dart';
-export 'theme/theme_inherited_widget.dart';
 // Theme
 export 'theme/theme_manager.dart';
 // Utilities

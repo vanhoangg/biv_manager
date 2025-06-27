@@ -46,8 +46,12 @@ class TransactionDetailBloc
   ) async {
     try {
       emit(const TransactionDetailLoading());
-      final transaction = await repository.getTransaction(event.transactionId);
-      emit(TransactionDetailLoaded(transaction));
+      final result = await repository.getTransactionById(event.transactionId);
+
+      result.fold(
+        onSuccess: (transaction) => emit(TransactionDetailLoaded(transaction)),
+        onFailure: (failure) => emit(TransactionDetailError(failure.message)),
+      );
     } catch (e) {
       emit(TransactionDetailError(e.toString()));
     }

@@ -1,19 +1,41 @@
 import '../entities/transaction_entity.dart';
+import '../../core/result.dart';
 
-/// Transaction repository interface
+/// Repository interface for transaction operations
 abstract class TransactionRepository {
   /// Get all transactions
-  Future<List<TransactionEntity>> getTransactions();
+  Future<Result<List<TransactionEntity>>> getTransactions();
 
-  /// Get transaction by ID
-  Future<TransactionEntity> getTransaction(String id);
+  /// Get a transaction by ID
+  Future<Result<TransactionEntity>> getTransactionById(String id);
 
-  /// Create transaction
-  Future<TransactionEntity> createTransaction(TransactionEntity transaction);
+  /// Create a new transaction
+  Future<Result<TransactionEntity>> createTransaction(
+      TransactionEntity transaction);
 
-  /// Update transaction
-  Future<TransactionEntity> updateTransaction(TransactionEntity transaction);
+  /// Update an existing transaction
+  Future<Result<TransactionEntity>> updateTransaction(
+      TransactionEntity transaction);
 
-  /// Delete transaction
-  Future<void> deleteTransaction(String id);
+  /// Delete a transaction
+  Future<Result<void>> deleteTransaction(String id);
+
+  /// Get transactions by date range
+  Future<Result<List<TransactionEntity>>> getTransactionsByDateRange(
+    DateTime startDate,
+    DateTime endDate,
+  );
+
+  /// Get transactions by customer
+  Future<Result<List<TransactionEntity>>> getTransactionsByCustomer(
+      String customerId);
+
+  /// Get total amount by date range
+  Future<Result<double>> getTotalAmountByDateRange(
+    DateTime startDate,
+    DateTime endDate,
+  );
+
+  /// Get total amount by customer
+  Future<Result<double>> getTotalAmountByCustomer(String customerId);
 }

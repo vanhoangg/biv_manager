@@ -1,4 +1,4 @@
-import 'package:biv_manager/shared/index.dart';
+import '../../../shared/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

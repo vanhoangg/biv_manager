@@ -1,128 +1,174 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../shared/index.dart';
-
-import '../../../domain/entities/transaction_entity.dart' as domain;
+import '../../../core/error/failures.dart';
+import '../../../domain/entities/transaction_entity.dart';
+import '../../models/transaction_dto.dart';
 
 /// Transaction remote data source
 abstract class TransactionRemoteDataSource {
   /// Get all transactions
-  Future<List<domain.TransactionEntity>> getTransactions();
+  Future<List<TransactionEntity>> getTransactions();
 
-  /// Get transaction by ID
-  Future<domain.TransactionEntity> getTransaction(String id);
+  /// Get a transaction by ID
+  Future<TransactionEntity> getTransactionById(String id);
 
-  /// Create transaction
-  Future<domain.TransactionEntity> createTransaction(
-      domain.TransactionEntity transaction);
+  /// Create a new transaction
+  Future<TransactionEntity> createTransaction(TransactionDTO transaction);
 
-  /// Update transaction
-  Future<domain.TransactionEntity> updateTransaction(
-      domain.TransactionEntity transaction);
+  /// Update an existing transaction
+  Future<TransactionEntity> updateTransaction(TransactionDTO transaction);
 
-  /// Delete transaction
+  /// Delete a transaction
   Future<void> deleteTransaction(String id);
+
+  /// Get transactions by date range
+  Future<List<TransactionEntity>> getTransactionsByDateRange(
+    DateTime startDate,
+    DateTime endDate,
+  );
+
+  /// Get transactions by customer
+  Future<List<TransactionEntity>> getTransactionsByCustomer(String customerId);
+
+  /// Get total amount by date range
+  Future<double> getTotalAmountByDateRange(
+    DateTime startDate,
+    DateTime endDate,
+  );
+
+  /// Get total amount by customer
+  Future<double> getTotalAmountByCustomer(String customerId);
 }
 
 /// Transaction remote data source implementation
 class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
   /// Firestore instance
-  final FirebaseFirestore firestore;
+  final FirebaseFirestore _firestore;
 
   /// Collection name
   static const String _collection = 'transactions';
 
   /// Constructor
-  TransactionRemoteDataSourceImpl(this.firestore);
+  TransactionRemoteDataSourceImpl({
+    required FirebaseFirestore firestore,
+  }) : _firestore = firestore;
 
   @override
-  Future<List<domain.TransactionEntity>> getTransactions() async {
+  Future<List<TransactionEntity>> getTransactions() async {
     try {
-      final snapshot = await firestore.collection(_collection).get();
-      return snapshot.docs.map((doc) {
-        final data = doc.data();
-        return domain.TransactionEntity(
-          id: doc.id,
-          title: data['title'] as String,
-          amount: (data['amount'] as num).toDouble(),
-          date: (data['date'] as Timestamp).toDate(),
-          status: data['status'] as String,
-          description: data['description'] as String?,
-          type: data['type'] as String,
-          category: data['category'] as String,
-        );
-      }).toList();
+      final snapshot = await _firestore.collection(_collection).get();
+      return snapshot.docs
+          .map((doc) => TransactionEntity.fromJson(doc.data()))
+          .toList();
     } catch (e) {
-      throw ServerException('Failed to get transactions: ${e.toString()}');
+      throw ServerFailure();
     }
   }
 
   @override
-  Future<domain.TransactionEntity> getTransaction(String id) async {
+  Future<TransactionEntity> getTransactionById(String id) async {
     try {
-      final doc = await firestore.collection(_collection).doc(id).get();
+      final doc = await _firestore.collection(_collection).doc(id).get();
       if (!doc.exists) {
-        throw ServerException('Transaction not found');
+        throw NotFoundFailure();
       }
-      final data = doc.data()!;
-      return domain.TransactionEntity(
-        id: doc.id,
-        title: data['title'] as String,
-        amount: (data['amount'] as num).toDouble(),
-        date: (data['date'] as Timestamp).toDate(),
-        status: data['status'] as String,
-        description: data['description'] as String?,
-        type: data['type'] as String,
-        category: data['category'] as String,
-      );
+      return TransactionEntity.fromJson(doc.data()!);
     } catch (e) {
-      throw ServerException('Failed to get transaction: ${e.toString()}');
+      throw ServerFailure();
     }
   }
 
   @override
-  Future<domain.TransactionEntity> createTransaction(
-      domain.TransactionEntity transaction) async {
+  Future<TransactionEntity> createTransaction(
+      TransactionDTO transaction) async {
     try {
-      final doc = await firestore.collection(_collection).add({
-        'title': transaction.title,
-        'amount': transaction.amount,
-        'date': Timestamp.fromDate(transaction.date),
-        'status': transaction.status,
-        'description': transaction.description,
-        'type': transaction.type,
-        'category': transaction.category,
-      });
-      return transaction.copyWith(id: doc.id);
+      final docRef =
+          await _firestore.collection(_collection).add(transaction.toJson());
+      final doc = await docRef.get();
+      return TransactionEntity.fromJson(doc.data()!);
     } catch (e) {
-      throw ServerException('Failed to create transaction: ${e.toString()}');
+      throw ServerFailure();
     }
   }
 
   @override
-  Future<domain.TransactionEntity> updateTransaction(
-      domain.TransactionEntity transaction) async {
+  Future<TransactionEntity> updateTransaction(
+      TransactionDTO transaction) async {
     try {
-      await firestore.collection(_collection).doc(transaction.id).update({
-        'title': transaction.title,
-        'amount': transaction.amount,
-        'date': Timestamp.fromDate(transaction.date),
-        'status': transaction.status,
-        'description': transaction.description,
-        'type': transaction.type,
-        'category': transaction.category,
-      });
-      return transaction;
+      await _firestore
+          .collection(_collection)
+          .doc(transaction.id)
+          .update(transaction.toJson());
+      final doc =
+          await _firestore.collection(_collection).doc(transaction.id).get();
+      return TransactionEntity.fromJson(doc.data()!);
     } catch (e) {
-      throw ServerException('Failed to update transaction: ${e.toString()}');
+      throw ServerFailure();
     }
   }
 
   @override
   Future<void> deleteTransaction(String id) async {
     try {
-      await firestore.collection(_collection).doc(id).delete();
+      await _firestore.collection(_collection).doc(id).delete();
     } catch (e) {
-      throw ServerException('Failed to delete transaction: ${e.toString()}');
+      throw ServerFailure();
     }
+  }
+
+  @override
+  Future<List<TransactionEntity>> getTransactionsByDateRange(
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+    try {
+      final snapshot = await _firestore
+          .collection(_collection)
+          .where('date', isGreaterThanOrEqualTo: Timestamp.fromDate(startDate))
+          .where('date', isLessThanOrEqualTo: Timestamp.fromDate(endDate))
+          .get();
+      return snapshot.docs
+          .map((doc) => TransactionEntity.fromJson(doc.data()))
+          .toList();
+    } catch (e) {
+      throw ServerFailure();
+    }
+  }
+
+  @override
+  Future<List<TransactionEntity>> getTransactionsByCustomer(
+    String customerId,
+  ) async {
+    try {
+      final snapshot = await _firestore
+          .collection(_collection)
+          .where('customerId', isEqualTo: customerId)
+          .get();
+      return snapshot.docs
+          .map((doc) => TransactionEntity.fromJson(doc.data()))
+          .toList();
+    } catch (e) {
+      throw ServerFailure();
+    }
+  }
+
+  @override
+  Future<double> getTotalAmountByDateRange(
+    DateTime startDate,
+    DateTime endDate,
+  ) async {
+    final transactions = await getTransactionsByDateRange(startDate, endDate);
+    return transactions.fold<double>(
+      0.0,
+      (sum, transaction) => sum + transaction.amount,
+    );
+  }
+
+  @override
+  Future<double> getTotalAmountByCustomer(String customerId) async {
+    final transactions = await getTransactionsByCustomer(customerId);
+    return transactions.fold<double>(
+      0.0,
+      (sum, transaction) => sum + transaction.amount,
+    );
   }
 }

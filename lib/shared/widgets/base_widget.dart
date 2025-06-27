@@ -1,6 +1,6 @@
-import 'package:biv_manager/l10n/output/app_localizations.dart';
-import 'package:biv_manager/shared/services/localization_service.dart';
-import 'package:biv_manager/shared/theme/theme_manager.dart';
+import '../../l10n/output/app_localizations.dart';
+import '../services/localization_service.dart';
+import '../theme/theme_manager.dart';
 import 'package:flutter/material.dart';
 import '../../core/di/injection_container.dart';
 import '../constants/app_constants.dart';

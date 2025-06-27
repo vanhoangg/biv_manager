@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 /// Entity class representing application settings
@@ -47,32 +48,58 @@ class SettingsEntity extends Equatable {
     this.cacheSizeLimit = 100,
     this.enableAnalytics = true,
     this.enableCrashReporting = true,
-    this.enableLocationServices = false,
+    this.enableLocationServices = true,
     this.fontSize = 16.0,
     this.useSystemFont = true,
     this.fontFamily = 'Roboto',
   });
 
-  @override
-  List<Object?> get props => [
-        isDarkMode,
-        themeColor,
-        languageCode,
-        countryCode,
-        enablePushNotifications,
-        enableEmailNotifications,
-        notificationTypes,
-        autoPlayVideos,
-        enableHapticFeedback,
-        enableSoundEffects,
-        cacheSizeLimit,
-        enableAnalytics,
-        enableCrashReporting,
-        enableLocationServices,
-        fontSize,
-        useSystemFont,
-        fontFamily,
-      ];
+  factory SettingsEntity.fromJson(Map<String, dynamic> json) {
+    return SettingsEntity(
+      isDarkMode: json['isDarkMode'] as bool? ?? false,
+      themeColor: json['themeColor'] as String? ?? '#2196F3',
+      languageCode: json['languageCode'] as String? ?? 'en',
+      countryCode: json['countryCode'] as String? ?? 'US',
+      enablePushNotifications: json['enablePushNotifications'] as bool? ?? true,
+      enableEmailNotifications:
+          json['enableEmailNotifications'] as bool? ?? true,
+      notificationTypes:
+          (json['notificationTypes'] as List<dynamic>?)?.cast<String>() ??
+              ['all'],
+      autoPlayVideos: json['autoPlayVideos'] as bool? ?? true,
+      enableHapticFeedback: json['enableHapticFeedback'] as bool? ?? true,
+      enableSoundEffects: json['enableSoundEffects'] as bool? ?? true,
+      cacheSizeLimit: json['cacheSizeLimit'] as int? ?? 100,
+      enableAnalytics: json['enableAnalytics'] as bool? ?? true,
+      enableCrashReporting: json['enableCrashReporting'] as bool? ?? true,
+      enableLocationServices: json['enableLocationServices'] as bool? ?? true,
+      fontSize: (json['fontSize'] as num?)?.toDouble() ?? 16.0,
+      useSystemFont: json['useSystemFont'] as bool? ?? true,
+      fontFamily: json['fontFamily'] as String? ?? 'Roboto',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'isDarkMode': isDarkMode,
+      'themeColor': themeColor,
+      'languageCode': languageCode,
+      'countryCode': countryCode,
+      'enablePushNotifications': enablePushNotifications,
+      'enableEmailNotifications': enableEmailNotifications,
+      'notificationTypes': notificationTypes,
+      'autoPlayVideos': autoPlayVideos,
+      'enableHapticFeedback': enableHapticFeedback,
+      'enableSoundEffects': enableSoundEffects,
+      'cacheSizeLimit': cacheSizeLimit,
+      'enableAnalytics': enableAnalytics,
+      'enableCrashReporting': enableCrashReporting,
+      'enableLocationServices': enableLocationServices,
+      'fontSize': fontSize,
+      'useSystemFont': useSystemFont,
+      'fontFamily': fontFamily,
+    };
+  }
 
   /// Create a copy of this SettingsEntity with the given fields replaced with the new values
   SettingsEntity copyWith({
@@ -117,6 +144,27 @@ class SettingsEntity extends Equatable {
       fontFamily: fontFamily ?? this.fontFamily,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        isDarkMode,
+        themeColor,
+        languageCode,
+        countryCode,
+        enablePushNotifications,
+        enableEmailNotifications,
+        notificationTypes,
+        autoPlayVideos,
+        enableHapticFeedback,
+        enableSoundEffects,
+        cacheSizeLimit,
+        enableAnalytics,
+        enableCrashReporting,
+        enableLocationServices,
+        fontSize,
+        useSystemFont,
+        fontFamily,
+      ];
 
   @override
   bool operator ==(Object other) =>

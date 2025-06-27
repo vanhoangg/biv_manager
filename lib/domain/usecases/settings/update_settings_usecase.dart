@@ -1,24 +1,16 @@
-import '../../../../core/result.dart';
+import '../../../core/usecases/usecase.dart';
+import '../../../core/result.dart';
 import '../../entities/settings_entity.dart';
 import '../../repositories/settings_repository.dart';
 
-/// Use case for updating application settings
-class UpdateSettingsUseCase {
+/// Use case for updating settings
+class UpdateSettingsUseCase implements UseCase<void, SettingsEntity> {
   final SettingsRepository _repository;
 
-  /// Constructor
-  UpdateSettingsUseCase(this._repository);
+  const UpdateSettingsUseCase(this._repository);
 
-  /// Execute the use case
-  Future<Result<SettingsEntity>> call(SettingsEntity settings) async {
-    try {
-      final updatedSettings = await _repository.updateSettings(settings);
-      if (updatedSettings != null) {
-        return Result.ok(updatedSettings);
-      }
-      return Result.error(Exception('Failed to update settings'));
-    } catch (e) {
-      return Result.error(Exception(e.toString()));
-    }
+  @override
+  Future<Result<void>> call(SettingsEntity params) async {
+    return await _repository.updateSettings(params);
   }
 }

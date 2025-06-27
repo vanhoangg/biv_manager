@@ -19,42 +19,48 @@
 ///   }
 /// }
 /// ```
-sealed class Result<T> {
+library;
+
+import 'package:equatable/equatable.dart';
+import 'error/failures.dart';
+
+/// A class that represents either a success or a failure.
+sealed class Result<T> extends Equatable {
   const Result();
 
-  /// Creates a successful [Result], completed with the specified [value].
-  const factory Result.ok(T value) = Ok._;
+  /// Creates a success result with the given value.
+  factory Result.success(T value) => Ok(value);
 
-  /// Creates an error [Result], completed with the specified [error].
-  const factory Result.error(Exception error) = Error._;
+  /// Creates a failure result with the given failure.
+  factory Result.failure(Failure failure) => Error(failure);
 
-  /// Applies [onSuccess] if this is a success, or [onError] if this is an error.
-  ///
-  /// This is similar to [Either.fold] from the dartz package.
-  ///
-  /// Example:
-  /// ```dart
-  /// final result = await someAsyncOperation();
-  /// result.fold(
-  ///   (error) => handleError(error),
-  ///   (value) => handleSuccess(value),
-  /// );
-  /// ```
-  R fold<R>(
-      R Function(Exception error) onError, R Function(T value) onSuccess) {
+  /// Returns true if this result is a success.
+  bool get isSuccess => this is Ok<T>;
+
+  /// Returns true if this result is a failure.
+  bool get isFailure => this is Error<T>;
+
+  /// Folds this result into a value of type R.
+  R fold<R>({
+    required R Function(T value) onSuccess,
+    required R Function(Failure failure) onFailure,
+  }) {
     return switch (this) {
-      Ok<T>(value: var value) => onSuccess(value),
-      Error<T>(error: var error) => onError(error),
+      Ok(value: final value) => onSuccess(value),
+      Error(error: final error) => onFailure(error),
     };
   }
 }
 
 /// A successful [Result] with a returned [value].
 final class Ok<T> extends Result<T> {
-  const Ok._(this.value);
+  const Ok(this.value);
 
   /// The returned value of this result.
   final T value;
+
+  @override
+  List<Object?> get props => [value];
 
   @override
   String toString() => 'Result<$T>.ok($value)';
@@ -62,10 +68,13 @@ final class Ok<T> extends Result<T> {
 
 /// An error [Result] with a resulting [error].
 final class Error<T> extends Result<T> {
-  const Error._(this.error);
+  const Error(this.error);
 
   /// The resulting error of this result.
-  final Exception error;
+  final Failure error;
+
+  @override
+  List<Object?> get props => [error];
 
   @override
   String toString() => 'Result<$T>.error($error)';

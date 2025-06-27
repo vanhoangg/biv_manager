@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/usecases/usecase.dart';
 import '../../../domain/usecases/settings/get_settings_usecase.dart';
 import '../../../domain/usecases/settings/update_settings_usecase.dart';
 import 'settings_event.dart';
@@ -30,10 +31,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async {
     try {
       emit(const SettingsLoading());
-      final result = await _getSettingsUseCase();
+      final result = await _getSettingsUseCase(const NoParams());
       result.fold(
-        (error) => emit(SettingsError(error.toString())),
-        (settings) => emit(SettingsLoaded(settings)),
+        onSuccess: (settings) => emit(SettingsLoaded(settings)),
+        onFailure: (failure) => emit(SettingsError(failure.message)),
       );
     } catch (e) {
       emit(SettingsError(e.toString()));
@@ -48,8 +49,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       emit(const SettingsLoading());
       final result = await _updateSettingsUseCase(event.settings);
       result.fold(
-        (error) => emit(SettingsError(error.toString())),
-        (settings) => emit(SettingsLoaded(settings)),
+        onSuccess: (_) => emit(SettingsLoaded(event.settings)),
+        onFailure: (failure) => emit(SettingsError(failure.message)),
       );
     } catch (e) {
       emit(SettingsError(e.toString()));
