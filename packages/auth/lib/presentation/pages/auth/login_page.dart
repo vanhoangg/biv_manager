@@ -105,7 +105,7 @@ class _LoginPageState extends BaseState<LoginPage> {
                         onPressed: () {
                           context.go(AppConstants.routes.register);
                         },
-                        child: Text(l10n.dontHaveAccount),
+                        child: Text(l10n.register),
                       ),
                       TextButton(
                         onPressed: () {
