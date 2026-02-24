@@ -31,15 +31,15 @@ class CustomerListItem extends StatelessWidget {
                 Chip(
                   label: Text(customer.type),
                   backgroundColor: customer.type == 'business'
-                      ? Colors.blue.withOpacity(0.2)
-                      : Colors.green.withOpacity(0.2),
+                      ? Colors.blue.withAlpha(51)
+                      : Colors.green.withAlpha(51),
                 ),
                 const SizedBox(width: 8),
                 Chip(
                   label: Text(customer.status),
                   backgroundColor: customer.status == 'active'
-                      ? Colors.green.withOpacity(0.2)
-                      : Colors.red.withOpacity(0.2),
+                      ? Colors.green.withAlpha(51)
+                      : Colors.red.withAlpha(51),
                 ),
               ],
             ),

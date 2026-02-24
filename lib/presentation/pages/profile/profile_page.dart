@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../shared/index.dart';
+import 'package:shared/index.dart';
 
 /// Profile page that shows user information
 class ProfilePage extends BasePage {

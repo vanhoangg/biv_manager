@@ -38,6 +38,8 @@ class _TransactionsPageState extends State<TransactionsPage> {
           : null,
     );
 
+    if (!mounted) return;
+
     if (picked != null) {
       setState(() {
         _startDate = picked.start;

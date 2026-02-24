@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/entities/customer_entity.dart';
 import '../../../domain/usecases/customer/create_customer_usecase.dart';
 import '../../../domain/usecases/customer/delete_customer_usecase.dart';
 import '../../../domain/usecases/customer/get_customer_by_id_usecase.dart';

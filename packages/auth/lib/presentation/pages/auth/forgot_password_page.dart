@@ -1,9 +1,8 @@
-import '../../../l10n/output/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared/index.dart';
 
-import '../../../shared/index.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../../blocs/auth/auth_event.dart';
 import '../../blocs/auth/auth_state.dart';
@@ -29,10 +28,10 @@ class _ForgotPasswordPageState extends BaseState<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = l10nOf(context);
 
     return Scaffold(
-      appBar: CustomAppBar(title: l10n?.forgotPassword ?? ''),
+      appBar: CustomAppBar(title: l10n.forgotPassword),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
@@ -55,12 +54,12 @@ class _ForgotPasswordPageState extends BaseState<ForgotPasswordPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomTextField(
-                    label: l10n?.email ?? '',
+                    label: l10n.email,
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return l10n?.invalidEmail ?? '';
+                        return l10n.invalidEmail;
                       }
                       return null;
                     },
@@ -85,7 +84,7 @@ class _ForgotPasswordPageState extends BaseState<ForgotPasswordPage> {
                     onPressed: () {
                       context.go(AppConstants.routes.login);
                     },
-                    child: Text(l10n?.login ?? ''),
+                    child: Text(l10n.login),
                   ),
                 ],
               ),

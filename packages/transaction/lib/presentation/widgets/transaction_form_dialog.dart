@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
 import '../blocs/transaction/transaction_bloc.dart';
 import '../blocs/transaction/transaction_event.dart';
 import '../../domain/entities/transaction_entity.dart';
@@ -66,7 +65,8 @@ class _TransactionFormDialogState extends State<TransactionFormDialog> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       final transaction = TransactionEntity(
-        id: widget.transaction?.id ?? const Uuid().v4(),
+        id: widget.transaction?.id ??
+            DateTime.now().microsecondsSinceEpoch.toString(),
         title: _titleController.text,
         description: _descriptionController.text,
         amount: double.parse(_amountController.text),

@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/entities/transaction_entity.dart';
 import '../../../domain/usecases/transaction/create_transaction_usecase.dart';
 import '../../../domain/usecases/transaction/delete_transaction_usecase.dart';
 import '../../../domain/usecases/transaction/get_total_amount_by_customer_usecase.dart';

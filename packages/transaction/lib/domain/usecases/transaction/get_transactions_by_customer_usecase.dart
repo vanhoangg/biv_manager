@@ -1,4 +1,4 @@
-import '../../../core/usecases/usecase.dart';
+import 'package:core/usecases/usecase.dart';
 import 'package:core/result.dart';
 import '../../entities/transaction_entity.dart';
 import '../../repositories/transaction_repository.dart';

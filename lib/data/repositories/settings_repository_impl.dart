@@ -11,7 +11,6 @@ import '../mappers/settings_mapper.dart';
 /// Implementation of SettingsRepository
 /// Combines local and remote data sources to provide a unified settings interface
 class SettingsRepositoryImpl implements SettingsRepository {
-  final FirebaseFirestore _firestore;
   final SettingsLocalDataSource _localDataSource;
   final SettingsRemoteDataSource _remoteDataSource;
   SettingsDTO? _lastRemoteSettings;
@@ -21,8 +20,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
     required FirebaseFirestore firestore,
     required SettingsLocalDataSource localDataSource,
     required SettingsRemoteDataSource remoteDataSource,
-  })  : _firestore = firestore,
-        _localDataSource = localDataSource,
+  })  : _localDataSource = localDataSource,
         _remoteDataSource = remoteDataSource {
     // Initialize Remote Config listener
     _initializeRemoteConfigListener();
@@ -46,11 +44,11 @@ class SettingsRepositoryImpl implements SettingsRepository {
       final settings = await _remoteDataSource.getSettings();
       await _localDataSource.cacheSettings(SettingsMapper.toEntity(settings));
       return Result.success(SettingsMapper.toEntity(settings));
-    } on ServerFailure catch (e) {
+    } on ServerFailure {
       try {
         final cachedSettings = await _localDataSource.getCachedSettings();
         return Result.success(cachedSettings);
-      } catch (e) {
+      } catch (_) {
         return Result.failure(UnknownFailure());
       }
     } catch (e) {

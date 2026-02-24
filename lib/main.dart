@@ -9,6 +9,7 @@ import 'package:shared/index.dart';
 
 // Import from main app
 import 'core/di/injection_container.dart';
+import 'l10n/output/app_localizations.dart';
 import 'presentation/pages/splash/splash_page.dart';
 
 /// Main app entry point
@@ -22,6 +23,7 @@ void main() async {
 
   // Initialize dependency injection
   await init();
+  LocalizationService.registerAppLocalizationLookup(AppLocalizations.of);
 
   runApp(const MyApp());
 }
@@ -46,7 +48,10 @@ class MyApp extends StatelessWidget {
           darkTheme: themeManager.darkTheme,
           themeMode: themeManager.themeMode,
           locale: localizationService.locale,
-          localizationsDelegates: LocalizationService.localizationsDelegates,
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            ...LocalizationService.localizationsDelegates,
+          ],
           supportedLocales: LocalizationService.supportedLocales,
           home: const SplashPage(),
           builder: (context, child) {

@@ -1,11 +1,13 @@
-import '../../l10n/output/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/app_constants.dart';
 
+typedef AppLocalizationLookup = Object? Function(BuildContext context);
+
 /// Localization service that handles app translations
 class LocalizationService extends ChangeNotifier {
+  static AppLocalizationLookup? _appLocalizationLookup;
   Locale _locale = const Locale('en');
 
   /// Get supported locales
@@ -16,7 +18,6 @@ class LocalizationService extends ChangeNotifier {
 
   /// Get localization delegates
   static List<LocalizationsDelegate<dynamic>> get localizationsDelegates => [
-        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -24,6 +25,23 @@ class LocalizationService extends ChangeNotifier {
 
   /// Get current locale
   Locale get locale => _locale;
+
+  /// Register app-specific localization lookup from the app layer.
+  static void registerAppLocalizationLookup(AppLocalizationLookup lookup) {
+    _appLocalizationLookup = lookup;
+  }
+
+  /// Resolve app-specific localizations without coupling shared to generated code.
+  static dynamic appL10nOf(BuildContext context) {
+    final localizations = _appLocalizationLookup?.call(context);
+    if (localizations == null) {
+      throw FlutterError(
+        'App localization lookup is not registered or returned null. '
+        'Register it from the app layer and include the app localization delegate.',
+      );
+    }
+    return localizations;
+  }
 
   /// Get current locale
   Future<Locale> getCurrentLocale() async {

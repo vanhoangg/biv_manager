@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Import from packages
-import 'package:core/index.dart';
+import 'package:core/index.dart' as core;
 import 'package:shared/index.dart';
 import 'package:auth/index.dart';
 import 'package:customer/index.dart';
@@ -14,15 +14,11 @@ import 'package:transaction/index.dart';
 // Import from main app
 import '../../data/datasources/settings/settings_local_data_source.dart';
 import '../../data/datasources/settings/settings_remote_data_source.dart';
-import '../../data/datasources/transaction/transaction_local_data_source.dart';
 import '../../data/repositories/settings_repository_impl.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../../domain/usecases/settings/get_settings_usecase.dart';
 import '../../domain/usecases/settings/update_settings_usecase.dart';
-import '../../domain/usecases/transaction/get_transactions_usecase.dart';
 import '../../presentation/blocs/settings/settings_bloc.dart';
-import '../../presentation/blocs/settings/settings_event.dart';
-import '../../presentation/blocs/settings/settings_state.dart';
 
 /// Service locator instance
 final GetIt sl = GetIt.instance;
