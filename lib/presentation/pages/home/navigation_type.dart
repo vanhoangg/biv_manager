@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:customer/index.dart';
+import 'package:settings/index.dart';
 import 'package:transaction/index.dart';
 
 import '../dashboard/dashboard_page.dart';
 import '../reports/reports_page.dart';
-import '../settings/settings_page.dart';
 
 /// Navigation type enum
 enum NavigationType {

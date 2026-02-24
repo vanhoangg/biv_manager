@@ -16,6 +16,8 @@ dependencies:
     path: modules/auth
   customer:
     path: modules/customer
+  settings:
+    path: modules/settings
   transaction:
     path: modules/transaction
   app:

@@ -9,16 +9,8 @@ import 'package:core/index.dart' as core;
 import 'package:shared/index.dart';
 import 'package:auth/index.dart';
 import 'package:customer/index.dart';
+import 'package:settings/index.dart';
 import 'package:transaction/index.dart';
-
-// Import from main app
-import '../../data/datasources/settings/settings_local_data_source.dart';
-import '../../data/datasources/settings/settings_remote_data_source.dart';
-import '../../data/repositories/settings_repository_impl.dart';
-import '../../domain/repositories/settings_repository.dart';
-import '../../domain/usecases/settings/get_settings_usecase.dart';
-import '../../domain/usecases/settings/update_settings_usecase.dart';
-import '../../presentation/blocs/settings/settings_bloc.dart';
 
 /// Service locator instance
 final GetIt sl = GetIt.instance;
@@ -52,12 +44,6 @@ Future<void> init() async {
   sl.registerLazySingleton(() => RTLService(sl()));
 
   // Data sources
-  sl.registerLazySingleton<SettingsLocalDataSource>(
-    () => SettingsLocalDataSourceImpl(sl()),
-  );
-  sl.registerLazySingleton<SettingsRemoteDataSource>(
-    () => SettingsRemoteDataSource(sl()),
-  );
   sl.registerLazySingleton<TransactionLocalDataSource>(
     () => TransactionLocalDataSourceImpl(
       sharedPreferences: sl(),
@@ -65,16 +51,8 @@ Future<void> init() async {
   );
 
   // Repositories
-  sl.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(sl()),
-  );
-  sl.registerLazySingleton<SettingsRepository>(
-    () => SettingsRepositoryImpl(
-      firestore: sl(),
-      localDataSource: sl(),
-      remoteDataSource: sl(),
-    ),
-  );
+  registerAuthModule(sl);
+  registerSettingsModule(sl);
   sl.registerLazySingleton<CustomerRepository>(
     () => CustomerRepositoryImpl(sl()),
   );
@@ -87,13 +65,6 @@ Future<void> init() async {
   );
 
   // Use cases
-  sl.registerLazySingleton(() => SignInUseCase(sl<AuthRepository>()));
-  sl.registerLazySingleton(() => SignUpUseCase(sl<AuthRepository>()));
-  sl.registerLazySingleton(() => ResetPasswordUseCase(sl<AuthRepository>()));
-  sl.registerLazySingleton(() => GetSettingsUseCase(sl<SettingsRepository>()));
-  sl.registerLazySingleton(
-      () => UpdateSettingsUseCase(sl<SettingsRepository>()));
-
   // Customer use cases
   sl.registerLazySingleton(() => GetCustomersUseCase(sl<CustomerRepository>()));
   sl.registerLazySingleton(
@@ -132,19 +103,6 @@ Future<void> init() async {
       () => GetTotalAmountByCustomerUseCase(sl<TransactionRepository>()));
 
   // Blocs
-  sl.registerFactory(
-    () => AuthBloc(
-      signInUseCase: sl(),
-      signUpUseCase: sl(),
-      resetPasswordUseCase: sl(),
-    ),
-  );
-  sl.registerFactory(
-    () => SettingsBloc(
-      getSettingsUseCase: sl(),
-      updateSettingsUseCase: sl(),
-    ),
-  );
   sl.registerFactory(
     () => CustomerBloc(
       getCustomersUseCase: sl(),

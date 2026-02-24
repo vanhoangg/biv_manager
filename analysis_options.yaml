@@ -3,3 +3,7 @@
 # This file enables recommended Flutter lints for the project.
 
 include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - modules/**
