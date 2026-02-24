@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:core/di/injection_container.dart';
 import 'package:shared/index.dart';
-import 'package:auth/domain/repositories/auth_repository.dart';
 import 'package:auth/presentation/blocs/auth/auth_bloc.dart';
 import 'package:auth/presentation/blocs/auth/auth_event.dart';
 import 'package:auth/presentation/blocs/auth/auth_state.dart';
@@ -66,7 +65,7 @@ class _LoginPageState extends BaseState<LoginPage> {
                     children: [
                       CustomTextField(
                         controller: _emailController,
-                        labelText: l10n.email,
+                        label: l10n.email,
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -78,7 +77,7 @@ class _LoginPageState extends BaseState<LoginPage> {
                       const SizedBox(height: 16),
                       CustomTextField(
                         controller: _passwordController,
-                        labelText: l10n.password,
+                        label: l10n.password,
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -92,7 +91,7 @@ class _LoginPageState extends BaseState<LoginPage> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             context.read<AuthBloc>().add(
-                                  SignInRequested(
+                                  LoginRequested(
                                     email: _emailController.text,
                                     password: _passwordController.text,
                                   ),

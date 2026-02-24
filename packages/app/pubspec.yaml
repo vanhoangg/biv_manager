@@ -1,6 +1,7 @@
 name: app
 description: Main app package for Biv Manager
 version: 1.0.0
+publish_to: none
 
 environment:
   sdk: ">=3.2.3 <4.0.0"
@@ -22,6 +23,7 @@ dependencies:
   responsive_framework: ^1.4.0
   cupertino_icons: ^1.0.2
   firebase_remote_config: ^5.4.4
+  get_it: ^8.0.3
   flutter_localizations:
     sdk: flutter
   internet_connection_checker: ^3.0.1
@@ -33,15 +35,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  assets:
-    - assets/images/
-    - assets/icons/
-    - assets/fonts/
-
-  fonts:
-    - family: Roboto
-      fonts:
-        - asset: assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf
-        - asset: assets/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf
-          style: italic

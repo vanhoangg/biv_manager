@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../shared/index.dart';
+import 'package:shared/index.dart';
 import '../../../domain/entities/transaction_entity.dart';
 import '../../blocs/transaction_detail/transaction_detail_bloc.dart';
 import '../../blocs/transaction_detail/transaction_detail_state.dart';
@@ -87,10 +87,8 @@ class _TransactionDetailPageState extends BaseState<TransactionDetailPage> {
           _buildAmountSection(context, transaction),
           const SizedBox(height: 24),
           _buildDetailsSection(context, transaction),
-          if (transaction.description != null) ...[
-            const SizedBox(height: 24),
-            _buildDescriptionSection(context, transaction),
-          ],
+          const SizedBox(height: 24),
+          _buildDescriptionSection(context, transaction),
         ],
       ),
     );
@@ -203,7 +201,7 @@ class _TransactionDetailPageState extends BaseState<TransactionDetailPage> {
           ),
           const SizedBox(height: 16),
           Text(
-            transaction.description!,
+            transaction.description,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],

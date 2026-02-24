@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../core/error/failures.dart';
-import '../../core/result.dart';
+import 'package:core/error/failures.dart';
+import 'package:core/result.dart';
 import '../../domain/entities/transaction_entity.dart';
 import '../../domain/repositories/transaction_repository.dart';
 import '../datasources/transaction/transaction_local_data_source.dart';
@@ -9,7 +9,6 @@ import '../models/transaction_dto.dart';
 
 /// Implementation of TransactionRepository using Firebase
 class TransactionRepositoryImpl implements TransactionRepository {
-  final FirebaseFirestore _firestore;
   final TransactionLocalDataSource _localDataSource;
   final TransactionRemoteDataSource _remoteDataSource;
 
@@ -18,8 +17,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     required FirebaseFirestore firestore,
     required TransactionLocalDataSource localDataSource,
     required TransactionRemoteDataSource remoteDataSource,
-  })  : _firestore = firestore,
-        _localDataSource = localDataSource,
+  })  : _localDataSource = localDataSource,
         _remoteDataSource = remoteDataSource;
 
   @override
@@ -137,7 +135,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
       );
       final total = transactions.fold<double>(
         0,
-        (sum, transaction) => sum + transaction.amount,
+        (totalAmount, transaction) => totalAmount + transaction.amount,
       );
       return Result.success(total);
     } on ServerFailure catch (e) {
@@ -155,7 +153,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
       );
       final total = transactions.fold<double>(
         0,
-        (sum, transaction) => sum + transaction.amount,
+        (totalAmount, transaction) => totalAmount + transaction.amount,
       );
       return Result.success(total);
     } on ServerFailure catch (e) {

@@ -1,12 +1,8 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:core/di/injection_container.dart';
+import 'package:shared/index.dart';
 import '../../domain/entities/auth_user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../../shared/index.dart';
-import '../mappers/auth_user_mapper.dart';
 
 /// Auth repository implementation
 class AuthRepositoryImpl implements AuthRepository {
@@ -15,18 +11,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   /// Constructor
   AuthRepositoryImpl(this._firebaseAuth);
-
-  void _validateUserCredential(UserCredential userCredential) async {
-    if (userCredential.user == null) {
-      throw Exception('User is null after sign in');
-    }
-    if (userCredential.user?.uid == null) {
-      throw Exception('User ID is null after sign in');
-    }
-    // Save token in shared preferences
-    sl<SharedPreferences>().setString(
-        AppConstants.storageKeys.token, userCredential.user?.uid ?? '');
-  }
 
   @override
   Future<AuthUserEntity> signInWithEmailAndPassword({

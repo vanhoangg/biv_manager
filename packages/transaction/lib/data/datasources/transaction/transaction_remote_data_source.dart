@@ -159,7 +159,7 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
     final transactions = await getTransactionsByDateRange(startDate, endDate);
     return transactions.fold<double>(
       0.0,
-      (sum, transaction) => sum + transaction.amount,
+      (totalAmount, transaction) => totalAmount + transaction.amount,
     );
   }
 
@@ -168,7 +168,7 @@ class TransactionRemoteDataSourceImpl implements TransactionRemoteDataSource {
     final transactions = await getTransactionsByCustomer(customerId);
     return transactions.fold<double>(
       0.0,
-      (sum, transaction) => sum + transaction.amount,
+      (totalAmount, transaction) => totalAmount + transaction.amount,
     );
   }
 }

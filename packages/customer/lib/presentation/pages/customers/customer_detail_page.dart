@@ -1,14 +1,11 @@
 import '../../../domain/entities/customer_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../data/models/customer_dto.dart';
-import '../../../shared/index.dart';
+import 'package:shared/index.dart';
 import '../../blocs/customer/customer_bloc.dart';
 import '../../blocs/customer/customer_event.dart';
 import '../../blocs/customer/customer_state.dart';
 import '../../widgets/customer_form_dialog.dart';
-import '../../widgets/loading_indicator.dart';
-import '../../widgets/error_view.dart';
 
 /// Customer detail page that shows customer information
 class CustomerDetailPage extends BaseStatefulWidget {
@@ -59,11 +56,11 @@ class _CustomerDetailPageState extends BaseState<CustomerDetailPage> {
       body: BlocBuilder<CustomerBloc, CustomerState>(
         builder: (context, state) {
           if (state is CustomerLoading) {
-            return const LoadingIndicator();
+            return const CustomLoading();
           }
 
           if (state is CustomerError) {
-            return ErrorView(
+            return CustomError(
               message: state.message,
               onRetry: () {
                 context
