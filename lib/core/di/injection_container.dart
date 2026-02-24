@@ -43,89 +43,11 @@ Future<void> init() async {
   // RTL
   sl.registerLazySingleton(() => RTLService(sl()));
 
-  // Data sources
-  sl.registerLazySingleton<TransactionLocalDataSource>(
-    () => TransactionLocalDataSourceImpl(
-      sharedPreferences: sl(),
-    ),
-  );
-
   // Repositories
   registerAuthModule(sl);
   registerSettingsModule(sl);
-  sl.registerLazySingleton<CustomerRepository>(
-    () => CustomerRepositoryImpl(sl()),
-  );
-  sl.registerLazySingleton<TransactionRepository>(
-    () => TransactionRepositoryImpl(
-      firestore: sl(),
-      localDataSource: sl(),
-      remoteDataSource: sl(),
-    ),
-  );
+  registerCustomerModule(sl);
+  registerTransactionModule(sl);
 
   // Use cases
-  // Customer use cases
-  sl.registerLazySingleton(() => GetCustomersUseCase(sl<CustomerRepository>()));
-  sl.registerLazySingleton(
-      () => GetCustomerByIdUseCase(sl<CustomerRepository>()));
-  sl.registerLazySingleton(
-      () => CreateCustomerUseCase(sl<CustomerRepository>()));
-  sl.registerLazySingleton(
-      () => UpdateCustomerUseCase(sl<CustomerRepository>()));
-  sl.registerLazySingleton(
-      () => DeleteCustomerUseCase(sl<CustomerRepository>()));
-  sl.registerLazySingleton(
-      () => SearchCustomersUseCase(sl<CustomerRepository>()));
-  sl.registerLazySingleton(
-      () => GetCustomersByStatusUseCase(sl<CustomerRepository>()));
-  sl.registerLazySingleton(
-      () => GetCustomersByTypeUseCase(sl<CustomerRepository>()));
-
-  // Transaction use cases
-  sl.registerLazySingleton(
-      () => GetTransactionsUseCase(sl<TransactionRepository>()));
-  sl.registerLazySingleton(
-      () => GetTransactionByIdUseCase(sl<TransactionRepository>()));
-  sl.registerLazySingleton(
-      () => CreateTransactionUseCase(sl<TransactionRepository>()));
-  sl.registerLazySingleton(
-      () => UpdateTransactionUseCase(sl<TransactionRepository>()));
-  sl.registerLazySingleton(
-      () => DeleteTransactionUseCase(sl<TransactionRepository>()));
-  sl.registerLazySingleton(
-      () => GetTransactionsByDateRangeUseCase(sl<TransactionRepository>()));
-  sl.registerLazySingleton(
-      () => GetTransactionsByCustomerUseCase(sl<TransactionRepository>()));
-  sl.registerLazySingleton(
-      () => GetTotalAmountByDateRangeUseCase(sl<TransactionRepository>()));
-  sl.registerLazySingleton(
-      () => GetTotalAmountByCustomerUseCase(sl<TransactionRepository>()));
-
-  // Blocs
-  sl.registerFactory(
-    () => CustomerBloc(
-      getCustomersUseCase: sl(),
-      getCustomerByIdUseCase: sl(),
-      createCustomerUseCase: sl(),
-      updateCustomerUseCase: sl(),
-      deleteCustomerUseCase: sl(),
-      searchCustomersUseCase: sl(),
-      getCustomersByStatusUseCase: sl(),
-      getCustomersByTypeUseCase: sl(),
-    ),
-  );
-  sl.registerFactory(
-    () => TransactionBloc(
-      getTransactionsUseCase: sl(),
-      getTransactionByIdUseCase: sl(),
-      createTransactionUseCase: sl(),
-      updateTransactionUseCase: sl(),
-      deleteTransactionUseCase: sl(),
-      getTransactionsByDateRangeUseCase: sl(),
-      getTransactionsByCustomerUseCase: sl(),
-      getTotalAmountByDateRangeUseCase: sl(),
-      getTotalAmountByCustomerUseCase: sl(),
-    ),
-  );
 }

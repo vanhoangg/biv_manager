@@ -14,7 +14,6 @@ export 'network/network_info.dart';
 export 'router/app_router.dart';
 export 'services/localization_service.dart';
 // Services
-export 'services/navigation_guard.dart';
 export 'services/rtl_service.dart';
 // Theme
 export 'theme/theme_manager.dart';

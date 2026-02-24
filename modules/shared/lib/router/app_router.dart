@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import '../constants/app_constants.dart';
-import '../services/navigation_guard.dart';
 
 /// App router configuration
 class AppRouter {
@@ -12,7 +11,7 @@ class AppRouter {
   }) {
     return GoRouter(
       initialLocation: initialLocation ?? AppConstants.routes.splash,
-      redirect: redirect ?? NavigationGuard.redirect,
+      redirect: redirect,
       routes: routes,
     );
   }

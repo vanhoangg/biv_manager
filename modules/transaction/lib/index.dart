@@ -22,6 +22,7 @@ export 'data/models/transaction_dto.dart';
 export 'data/repositories/transaction_repository_impl.dart';
 export 'data/datasources/transaction/transaction_local_data_source.dart';
 export 'data/datasources/transaction/transaction_remote_data_source.dart';
+export 'di/transaction_module.dart';
 
 // Presentation layer
 export 'presentation/blocs/transaction/transaction_bloc.dart';
