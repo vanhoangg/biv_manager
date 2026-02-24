@@ -1,18 +1,18 @@
 # AI Agent Global Rules & Guidelines
 
 ## 1. Communication Protocol
-- Start every response with "Hi Biv"
+- Use a polite greeting when appropriate (do not force the same greeting in every response)
 - Maintain professional and clear communication
 - Show only changed code sections without repeating unchanged parts
 - Summarize completed and pending tasks at the end of each response
-- If prompt is unclear or poorly written, improve it first before responding
+- If the prompt is unclear, ask clarifying questions or state assumptions before proceeding
 - Use markdown formatting for better readability
 - Keep responses concise but comprehensive
 
 ## 2. Code Quality Standards
 ### Documentation
 - Use /// doc comments for public functions and APIs
-- Add file header comments (file name, author, purpose)
+- Add file header comments only when required by team/project standards
 - Add parameter and return descriptions in doc comments
 - Comment architectural decisions
 - Mention performance implications
@@ -38,12 +38,12 @@
 - Prefer protocol-oriented programming
 - Use guard for early exits
 - Follow Swift style guide
-- Use SwiftLint for code formatting
+- Use SwiftLint for linting and SwiftFormat (or team-approved formatter) for formatting
 - Implement proper memory management
 
 ### Flutter/Dart
 - Use const widgets where possible
-- Manage state cleanly (Provider, Bloc)
+- Manage state cleanly and follow the project's existing pattern (e.g., Provider, Bloc, Riverpod)
 - Default to Dart unless otherwise specified
 - Follow Dart style guide
 - Use dart format for code formatting
@@ -59,9 +59,9 @@
 ## 4. Performance Optimization
 ### Concurrency
 - Perform network and heavy tasks off the main thread:
-  - async/await
-  - DispatchQueue
-  - Isolates
+  - async/await (Swift/Dart)
+  - DispatchQueue / Task (Swift)
+  - Isolates (Dart, when needed)
 - Use debouncing/throttling for user input
 - Implement proper thread management
 
@@ -79,7 +79,7 @@
 - Optimize data loading and storage
 
 ## 5. Error Handling
-- Use Result types or throws to propagate errors cleanly
+- Use platform-appropriate error handling (e.g., throws/exceptions/Result wrappers) to propagate errors cleanly
 - Show user-friendly error messages
 - Allow retry where appropriate
 - Handle errors gracefully
@@ -88,7 +88,7 @@
 - Provide meaningful error recovery options
 
 ## 6. Code Style & Formatting
-- Use SwiftLint/Dart formatters
+- Use team-approved formatters and linters (e.g., SwiftFormat + SwiftLint, `dart format`)
 - Adhere to team style guides
 - Automate formatting in pre-commit hooks
 - Run `flutter analyze` before committing
@@ -122,6 +122,7 @@ lib/
 - Share knowledge with team members
 
 ## 9. Interview Preparation
+- Apply this section only when the task is interview practice
 - Score answers 1-10
 - Provide detailed corrections
 - Give word-by-word corrections
@@ -143,7 +144,7 @@ lib/
 - Secure environment variables
 - Proper Firebase configuration
 - Secure API keys
-- Backdoor access only for development
+- Do not implement backdoors; use secure, auditable development-only access controls when necessary
 - Follow security best practices
 - Implement proper authentication
 - Handle sensitive data appropriately
@@ -192,7 +193,7 @@ lib/
 - Implement proper logging
 - Monitor application performance
 - Track error rates
-- Monitor user behavior
+- Monitor user behavior only with clear product need, consent, and privacy compliance
 - Implement crash reporting
 - Use appropriate analytics
 
