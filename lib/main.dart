@@ -7,9 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:auth/index.dart';
 import 'package:app/biv_manager_app.dart';
 import 'package:app/firebase_options.dart';
-import 'package:core/di/injection_container.dart' as di;
 import 'package:shared/index.dart';
 
+import 'core/di/injection_container.dart' as app_di;
 import 'l10n/output/app_localizations.dart';
 import 'presentation/pages/home/home_page.dart';
 import 'presentation/pages/splash/splash_page.dart';
@@ -24,7 +24,7 @@ void main() async {
   );
 
   // Initialize dependency injection
-  await di.init();
+  await app_di.init();
   LocalizationService.registerAppLocalizationLookup(AppLocalizations.of);
 
   runApp(
@@ -58,14 +58,14 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: AppConstants.routes.register,
       builder: (context, state) => BlocProvider<AuthBloc>(
-        create: (_) => di.sl<AuthBloc>(),
+        create: (_) => app_di.sl<AuthBloc>(),
         child: const RegisterPage(),
       ),
     ),
     GoRoute(
       path: AppConstants.routes.forgotPassword,
       builder: (context, state) => BlocProvider<AuthBloc>(
-        create: (_) => di.sl<AuthBloc>(),
+        create: (_) => app_di.sl<AuthBloc>(),
         child: const ForgotPasswordPage(),
       ),
     ),
