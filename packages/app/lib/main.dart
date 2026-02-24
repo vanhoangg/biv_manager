@@ -3,8 +3,12 @@ import 'biv_manager_app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:core/di/injection_container.dart' as di;
+import 'package:shared/services/localization_service.dart';
+import 'package:shared/theme/theme_manager.dart';
 
 /// Package-scaffold app entry point.
 ///
@@ -17,6 +21,17 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await di.init();
+  final getIt = GetIt.I;
+  if (!getIt.isRegistered<SharedPreferences>()) {
+    final prefs = await SharedPreferences.getInstance();
+    getIt.registerLazySingleton<SharedPreferences>(() => prefs);
+  }
+  if (!getIt.isRegistered<ThemeManager>()) {
+    getIt.registerLazySingleton(() => ThemeManager(getIt<SharedPreferences>()));
+  }
+  if (!getIt.isRegistered<LocalizationService>()) {
+    getIt.registerLazySingleton(() => LocalizationService());
+  }
 
   runApp(const MyApp());
 }
