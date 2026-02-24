@@ -1,15 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 // Import from packages
+import 'package:auth/index.dart';
+import 'package:app/biv_manager_app.dart';
 import 'package:app/firebase_options.dart';
 import 'package:core/di/injection_container.dart' as di;
 import 'package:shared/index.dart';
 
-// Import from main app
-import 'core/di/injection_container.dart';
 import 'l10n/output/app_localizations.dart';
+import 'presentation/pages/home/home_page.dart';
 import 'presentation/pages/splash/splash_page.dart';
 
 /// Main app entry point
@@ -22,51 +24,54 @@ void main() async {
   );
 
   // Initialize dependency injection
-  await init();
+  await di.init();
   LocalizationService.registerAppLocalizationLookup(AppLocalizations.of);
 
-  runApp(const MyApp());
+  runApp(
+    BivManagerApp(
+      routerConfig: _router,
+      extraLocalizationsDelegates: const [AppLocalizations.delegate],
+    ),
+  );
 }
 
-/// Main app widget
-class MyApp extends StatelessWidget {
-  /// Constructor
-  const MyApp({super.key});
+final GoRouter _router = GoRouter(
+  initialLocation: AppConstants.routes.splash,
+  redirect: (context, state) {
+    if (state.matchedLocation == AppConstants.routes.splash) {
+      return NavigationGuard.isAuthenticated()
+          ? AppConstants.routes.home
+          : AppConstants.routes.login;
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    final themeManager = di.sl<ThemeManager>();
-    final localizationService = di.sl<LocalizationService>();
-
-    return ListenableBuilder(
-      listenable: Listenable.merge([themeManager, localizationService]),
-      builder: (context, _) {
-        return MaterialApp(
-          title: AppConstants.appName,
-          debugShowCheckedModeBanner: false,
-          theme: themeManager.lightTheme,
-          darkTheme: themeManager.darkTheme,
-          themeMode: themeManager.themeMode,
-          locale: localizationService.locale,
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            ...LocalizationService.localizationsDelegates,
-          ],
-          supportedLocales: LocalizationService.supportedLocales,
-          home: const SplashPage(),
-          builder: (context, child) {
-            return ResponsiveBreakpoints.builder(
-              child: child!,
-              breakpoints: [
-                const Breakpoint(start: 0, end: 450, name: MOBILE),
-                const Breakpoint(start: 451, end: 800, name: TABLET),
-                const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-                const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
-}
+    return NavigationGuard.redirect(context, state);
+  },
+  routes: [
+    GoRoute(
+      path: AppConstants.routes.splash,
+      builder: (context, state) => const SplashPage(),
+    ),
+    GoRoute(
+      path: AppConstants.routes.login,
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: AppConstants.routes.register,
+      builder: (context, state) => BlocProvider<AuthBloc>(
+        create: (_) => di.sl<AuthBloc>(),
+        child: const RegisterPage(),
+      ),
+    ),
+    GoRoute(
+      path: AppConstants.routes.forgotPassword,
+      builder: (context, state) => BlocProvider<AuthBloc>(
+        create: (_) => di.sl<AuthBloc>(),
+        child: const ForgotPasswordPage(),
+      ),
+    ),
+    GoRoute(
+      path: AppConstants.routes.home,
+      builder: (context, state) => const HomePage(),
+    ),
+  ],
+);
