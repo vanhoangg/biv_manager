@@ -1,6 +1,0 @@
-# melos_managed_dependency_overrides: core,customer
-dependency_overrides:
-  core:
-    path: ../core
-  customer:
-    path: ../customer
