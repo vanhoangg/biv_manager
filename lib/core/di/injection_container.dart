@@ -4,45 +4,25 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Import from packages
+import 'package:core/index.dart';
+import 'package:shared/index.dart';
+import 'package:auth/index.dart';
+import 'package:customer/index.dart';
+import 'package:transaction/index.dart';
+
+// Import from main app
 import '../../data/datasources/settings/settings_local_data_source.dart';
 import '../../data/datasources/settings/settings_remote_data_source.dart';
 import '../../data/datasources/transaction/transaction_local_data_source.dart';
-import '../../data/datasources/transaction/transaction_remote_data_source.dart';
-import '../../data/repositories/auth_repository_impl.dart';
 import '../../data/repositories/settings_repository_impl.dart';
-import '../../data/repositories/customer_repository_impl.dart';
-import '../../data/repositories/transaction_repository_impl.dart';
-import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/settings_repository.dart';
-import '../../domain/repositories/customer_repository.dart';
-import '../../domain/repositories/transaction_repository.dart';
-import '../../domain/usecases/auth/reset_password_usecase.dart';
-import '../../domain/usecases/auth/sign_in_usecase.dart';
-import '../../domain/usecases/auth/sign_up_usecase.dart';
 import '../../domain/usecases/settings/get_settings_usecase.dart';
 import '../../domain/usecases/settings/update_settings_usecase.dart';
-import '../../domain/usecases/customer/get_customers_usecase.dart';
-import '../../domain/usecases/customer/get_customer_by_id_usecase.dart';
-import '../../domain/usecases/customer/create_customer_usecase.dart';
-import '../../domain/usecases/customer/update_customer_usecase.dart';
-import '../../domain/usecases/customer/delete_customer_usecase.dart';
-import '../../domain/usecases/customer/search_customers_usecase.dart';
-import '../../domain/usecases/customer/get_customers_by_status_usecase.dart';
-import '../../domain/usecases/customer/get_customers_by_type_usecase.dart';
 import '../../domain/usecases/transaction/get_transactions_usecase.dart';
-import '../../domain/usecases/transaction/get_transaction_by_id_usecase.dart';
-import '../../domain/usecases/transaction/create_transaction_usecase.dart';
-import '../../domain/usecases/transaction/update_transaction_usecase.dart';
-import '../../domain/usecases/transaction/delete_transaction_usecase.dart';
-import '../../domain/usecases/transaction/get_transactions_by_date_range_usecase.dart';
-import '../../domain/usecases/transaction/get_transactions_by_customer_usecase.dart';
-import '../../domain/usecases/transaction/get_total_amount_by_date_range_usecase.dart';
-import '../../domain/usecases/transaction/get_total_amount_by_customer_usecase.dart';
-import '../../presentation/blocs/auth/auth_bloc.dart';
 import '../../presentation/blocs/settings/settings_bloc.dart';
-import '../../presentation/blocs/customer/customer_bloc.dart';
-import '../../presentation/blocs/transaction/transaction_bloc.dart';
-import '../../shared/index.dart';
+import '../../presentation/blocs/settings/settings_event.dart';
+import '../../presentation/blocs/settings/settings_state.dart';
 
 /// Service locator instance
 final GetIt sl = GetIt.instance;
@@ -50,6 +30,9 @@ final GetIt sl = GetIt.instance;
 /// Initialize dependency injection container
 /// Manually registers all dependencies without code generation
 Future<void> init() async {
+  // Initialize core module
+  await core.init();
+
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
   final remoteConfig = FirebaseRemoteConfig.instance;
@@ -82,11 +65,6 @@ Future<void> init() async {
   sl.registerLazySingleton<TransactionLocalDataSource>(
     () => TransactionLocalDataSourceImpl(
       sharedPreferences: sl(),
-    ),
-  );
-  sl.registerLazySingleton<TransactionRemoteDataSource>(
-    () => TransactionRemoteDataSourceImpl(
-      firestore: sl(),
     ),
   );
 

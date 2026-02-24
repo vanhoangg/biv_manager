@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../core/error/failures.dart';
-import '../../core/result.dart';
+import 'package:core/result.dart';
+import 'package:core/error/failures.dart';
 import '../../domain/entities/settings_entity.dart';
 import '../../domain/repositories/settings_repository.dart';
 import '../datasources/settings/settings_local_data_source.dart';

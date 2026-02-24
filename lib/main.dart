@@ -1,24 +1,27 @@
-import 'firebase_options.dart';
-import 'shared/services/localization_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'core/di/injection_container.dart' as di;
-import 'shared/constants/app_constants.dart';
-import 'shared/theme/theme_manager.dart';
+// Import from packages
+import 'package:app/firebase_options.dart';
+import 'package:core/di/injection_container.dart' as di;
+import 'package:shared/index.dart';
+
+// Import from main app
+import 'core/di/injection_container.dart';
+import 'presentation/pages/splash/splash_page.dart';
 
 /// Main app entry point
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Initialize other dependencies
-  await di.init();
+  // Initialize dependency injection
+  await init();
 
   runApp(const MyApp());
 }
@@ -26,14 +29,12 @@ void main() async {
 /// Main app widget
 class MyApp extends StatelessWidget {
   /// Constructor
-  const MyApp({
-    super.key,
-  });
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeManager = GetIt.I<ThemeManager>();
-    final localizationService = GetIt.I<LocalizationService>();
+    final themeManager = di.sl<ThemeManager>();
+    final localizationService = di.sl<LocalizationService>();
 
     return ListenableBuilder(
       listenable: Listenable.merge([themeManager, localizationService]),
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
           locale: localizationService.locale,
           localizationsDelegates: LocalizationService.localizationsDelegates,
           supportedLocales: LocalizationService.supportedLocales,
+          home: const SplashPage(),
           builder: (context, child) {
             return ResponsiveBreakpoints.builder(
               child: child!,

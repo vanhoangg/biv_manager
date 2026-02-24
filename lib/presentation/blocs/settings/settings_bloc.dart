@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../core/usecases/usecase.dart';
+import 'package:core/usecases/usecase.dart';
 import '../../../domain/usecases/settings/get_settings_usecase.dart';
 import '../../../domain/usecases/settings/update_settings_usecase.dart';
 import 'settings_event.dart';

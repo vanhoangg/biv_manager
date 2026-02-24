@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import '../../../shared/index.dart';
+import 'package:shared/index.dart';
 
 /// Terms and Conditions Page
 class TermsPage extends BaseStatelessWidget {

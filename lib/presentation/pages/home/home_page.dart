@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../../shared/widgets/base_widget.dart';
+import 'package:shared/widgets/base_widget.dart';
 import 'navigation_type.dart';
 
 /// Home page that contains the main navigation structure

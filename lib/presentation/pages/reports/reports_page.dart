@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/index.dart';
+import 'package:shared/index.dart';
 
 /// Reports page that shows various reports and analytics
 class ReportsPage extends BasePage {

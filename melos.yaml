@@ -1,0 +1,42 @@
+name: biv_manager_workspace
+repository: https://github.com/your-username/biv_manager
+
+packages:
+  - packages/**
+
+scripts:
+  analyze:
+    description: Analyze all packages
+    run: melos exec -c 1 -- "dart analyze ."
+
+  test:
+    description: Run tests for all packages
+    run: melos exec -c 1 -- "flutter test"
+
+  build:
+    description: Build all packages
+    run: melos exec -c 1 -- "flutter build"
+
+  clean:
+    description: Clean all packages
+    run: melos exec -c 1 -- "flutter clean"
+
+  pub-get:
+    description: Get dependencies for all packages
+    run: melos exec -c 1 -- "flutter pub get"
+
+  format:
+    description: Format all packages
+    run: melos exec -c 1 -- "dart format ."
+
+  lint:
+    description: Lint all packages
+    run: melos exec -c 1 -- "dart analyze ."
+
+sdk: ">=3.2.3 <4.0.0"
+
+ide:
+  intellij:
+    enabled: true
+  vscode:
+    enabled: true

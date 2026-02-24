@@ -1,12 +1,14 @@
-import '../../../core/di/injection_container.dart' as di;
-import '../../../domain/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../core/di/injection_container.dart';
-import '../../../shared/index.dart';
+// Import from packages
+import 'package:core/di/injection_container.dart' as di;
+import 'package:auth/index.dart';
+import 'package:shared/index.dart';
+
+// Import from main app
 import '../../blocs/settings/settings_bloc.dart';
 import '../../blocs/settings/settings_event.dart';
 import '../../blocs/settings/settings_state.dart';
@@ -26,7 +28,7 @@ class SettingsPage extends BasePage {
 class _SettingsPageState extends BaseState<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    final bloc = sl<SettingsBloc>();
+    final bloc = di.sl<SettingsBloc>();
     final theme = Theme.of(context);
     final l10n = l10nOf(context);
 

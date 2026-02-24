@@ -1,5 +1,5 @@
-import '../../../core/usecases/usecase.dart';
-import '../../../core/result.dart';
+import 'package:core/result.dart';
+import 'package:core/usecases/usecase.dart';
 import '../../entities/settings_entity.dart';
 import '../../repositories/settings_repository.dart';
 

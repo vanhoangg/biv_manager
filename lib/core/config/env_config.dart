@@ -1,6 +1,6 @@
 // import 'package:flutter/foundation.dart';
 
-import '../../shared/index.dart';
+import 'package:shared/index.dart';
 
 /// Environment configuration for the app
 class EnvConfig {

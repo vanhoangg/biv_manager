@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../shared/index.dart';
+import 'package:shared/index.dart';
 
 /// A custom app bar widget with modern design.
 class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {

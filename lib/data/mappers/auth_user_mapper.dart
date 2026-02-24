@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../domain/entities/auth_user_entity.dart';
+import 'package:auth/domain/entities/auth_user_entity.dart';
 
 /// Mapper for converting UserCredential to AuthUser
 class AuthUserMapper {

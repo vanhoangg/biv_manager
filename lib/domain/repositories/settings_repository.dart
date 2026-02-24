@@ -1,5 +1,5 @@
 import '../entities/settings_entity.dart';
-import '../../core/result.dart';
+import 'package:core/result.dart';
 
 /// Repository interface for managing application settings
 /// Defines the contract for settings operations

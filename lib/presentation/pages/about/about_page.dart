@@ -4,7 +4,7 @@
 library;
 
 import 'package:flutter/material.dart';
-import '../../../shared/index.dart';
+import 'package:shared/index.dart';
 
 /// MARK: AboutPage - Shows app info and credits
 class AboutPage extends BasePage {

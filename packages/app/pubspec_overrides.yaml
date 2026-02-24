@@ -1,0 +1,12 @@
+# melos_managed_dependency_overrides: auth,core,customer,shared,transaction
+dependency_overrides:
+  auth:
+    path: ../auth
+  core:
+    path: ../core
+  customer:
+    path: ../customer
+  shared:
+    path: ../shared
+  transaction:
+    path: ../transaction

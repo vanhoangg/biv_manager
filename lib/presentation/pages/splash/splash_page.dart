@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import '../../../shared/index.dart';
+import 'package:shared/index.dart';
 
 /// Splash page that shows when the app is loading
 class SplashPage extends BaseStatelessWidget {

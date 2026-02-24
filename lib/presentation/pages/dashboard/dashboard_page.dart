@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../shared/index.dart';
+import 'package:shared/index.dart';
 
 /// Dashboard page that shows overview of the app
 class DashboardPage extends BasePage {
