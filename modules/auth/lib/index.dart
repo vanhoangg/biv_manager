@@ -13,6 +13,7 @@ export 'domain/usecases/auth/reset_password_usecase.dart';
 
 // Data layer
 export 'data/repositories/auth_repository_impl.dart';
+export 'di/auth_module.dart';
 
 // Presentation layer
 export 'presentation/blocs/auth/auth_bloc.dart';
