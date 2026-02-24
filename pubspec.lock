@@ -20,7 +20,7 @@ packages:
   app:
     dependency: "direct main"
     description:
-      path: "packages/app"
+      path: "modules/app"
       relative: true
     source: path
     version: "1.0.0"
@@ -43,7 +43,7 @@ packages:
   auth:
     dependency: "direct main"
     description:
-      path: "packages/auth"
+      path: "modules/auth"
       relative: true
     source: path
     version: "1.0.0"
@@ -170,7 +170,7 @@ packages:
   core:
     dependency: "direct main"
     description:
-      path: "packages/core"
+      path: "modules/core"
       relative: true
     source: path
     version: "1.0.0"
@@ -193,7 +193,7 @@ packages:
   customer:
     dependency: "direct main"
     description:
-      path: "packages/customer"
+      path: "modules/customer"
       relative: true
     source: path
     version: "1.0.0"
@@ -684,7 +684,7 @@ packages:
   shared:
     dependency: "direct main"
     description:
-      path: "packages/shared"
+      path: "modules/shared"
       relative: true
     source: path
     version: "1.0.0"
@@ -808,7 +808,7 @@ packages:
   transaction:
     dependency: "direct main"
     description:
-      path: "packages/transaction"
+      path: "modules/transaction"
       relative: true
     source: path
     version: "1.0.0"

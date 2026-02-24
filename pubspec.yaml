@@ -9,17 +9,17 @@ environment:
 dependencies:
   # Core packages
   core:
-    path: packages/core
+    path: modules/core
   shared:
-    path: packages/shared
+    path: modules/shared
   auth:
-    path: packages/auth
+    path: modules/auth
   customer:
-    path: packages/customer
+    path: modules/customer
   transaction:
-    path: packages/transaction
+    path: modules/transaction
   app:
-    path: packages/app
+    path: modules/app
 
   # External dependencies
   cloud_firestore: ^5.6.8
