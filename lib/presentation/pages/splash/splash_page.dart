@@ -25,6 +25,17 @@ class SplashPage extends BaseStatelessWidget {
                 ],
                 defaultValue: 200.0,
               ).value,
+              errorBuilder: (context, error, stackTrace) => Icon(
+                Icons.flutter_dash,
+                size: ResponsiveValue<double>(
+                  context,
+                  conditionalValues: [
+                    Condition.smallerThan(name: TABLET, value: 150.0),
+                    Condition.largerThan(name: DESKTOP, value: 250.0),
+                  ],
+                  defaultValue: 200.0,
+                ).value,
+              ),
             ),
             const SizedBox(height: 24),
             const CircularProgressIndicator(),
