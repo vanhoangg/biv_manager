@@ -7,9 +7,11 @@ import 'package:go_router/go_router.dart';
 import 'package:auth/index.dart';
 import 'package:app/biv_manager_app.dart';
 import 'package:app/firebase_options.dart';
+import 'package:app/theme/biv_theme_builder.dart';
 import 'package:shared/index.dart';
 
 import 'core/di/injection_container.dart' as app_di;
+import 'core/navigation/app_navigation_guard.dart';
 import 'l10n/output/app_localizations.dart';
 import 'presentation/pages/home/home_page.dart';
 import 'presentation/pages/splash/splash_page.dart';
@@ -25,6 +27,10 @@ void main() async {
 
   // Initialize dependency injection
   await app_di.init();
+  ThemeManager.registerThemeBuilders(
+    lightBuilder: BivThemeBuilder.buildLightTheme,
+    darkBuilder: BivThemeBuilder.buildDarkTheme,
+  );
   LocalizationService.registerAppLocalizationLookup(AppLocalizations.of);
 
   runApp(
@@ -39,12 +45,12 @@ final GoRouter _router = GoRouter(
   initialLocation: AppConstants.routes.splash,
   redirect: (context, state) {
     if (state.matchedLocation == AppConstants.routes.splash) {
-      return NavigationGuard.isAuthenticated()
+      return AppNavigationGuard.isAuthenticated()
           ? AppConstants.routes.home
           : AppConstants.routes.login;
     }
 
-    return NavigationGuard.redirect(context, state);
+    return AppNavigationGuard.redirect(context, state);
   },
   routes: [
     GoRoute(

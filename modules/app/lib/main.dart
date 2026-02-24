@@ -1,5 +1,6 @@
 import 'firebase_options.dart';
 import 'biv_manager_app.dart';
+import 'theme/biv_theme_builder.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -32,6 +33,10 @@ void main() async {
   if (!getIt.isRegistered<LocalizationService>()) {
     getIt.registerLazySingleton(() => LocalizationService());
   }
+  ThemeManager.registerThemeBuilders(
+    lightBuilder: BivThemeBuilder.buildLightTheme,
+    darkBuilder: BivThemeBuilder.buildDarkTheme,
+  );
 
   runApp(const MyApp());
 }

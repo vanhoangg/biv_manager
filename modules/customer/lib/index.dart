@@ -19,6 +19,7 @@ export 'domain/usecases/customer/get_customers_by_type_usecase.dart';
 // Data layer
 export 'data/models/customer_dto.dart';
 export 'data/repositories/customer_repository_impl.dart';
+export 'di/customer_module.dart';
 
 // Presentation layer
 export 'presentation/blocs/customer/customer_bloc.dart';

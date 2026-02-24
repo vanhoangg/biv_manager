@@ -9,6 +9,7 @@ export 'main.dart';
 
 // Reusable app shell
 export 'biv_manager_app.dart';
+export 'theme/biv_theme_builder.dart';
 
 // Firebase configuration
 export 'firebase_options.dart';

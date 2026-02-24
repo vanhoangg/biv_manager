@@ -4,8 +4,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/app_constants.dart';
 
+typedef ThemeDataBuilder = ThemeData Function();
+
 /// Theme manager class that handles theme state and persistence
 class ThemeManager extends ChangeNotifier {
+  static ThemeDataBuilder? _lightThemeBuilder;
+  static ThemeDataBuilder? _darkThemeBuilder;
+
+  /// Register app-layer theme builders to override shared defaults.
+  static void registerThemeBuilders({
+    ThemeDataBuilder? lightBuilder,
+    ThemeDataBuilder? darkBuilder,
+  }) {
+    _lightThemeBuilder = lightBuilder;
+    _darkThemeBuilder = darkBuilder;
+  }
   /// Shared preferences instance
   final SharedPreferences _prefs;
 
@@ -158,6 +171,8 @@ class ThemeManager extends ChangeNotifier {
   static const _darkTextSecondaryColor = Color(0xFFB0B0B0);
 
   ThemeData get lightTheme {
+    final builder = _lightThemeBuilder;
+    if (builder != null) return builder();
     return ThemeData(
       useMaterial3: true,
       colorScheme: const ColorScheme.light(
@@ -308,6 +323,8 @@ class ThemeManager extends ChangeNotifier {
   }
 
   ThemeData get darkTheme {
+    final builder = _darkThemeBuilder;
+    if (builder != null) return builder();
     return ThemeData(
       useMaterial3: true,
       colorScheme: const ColorScheme.dark(
